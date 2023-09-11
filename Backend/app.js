@@ -15,7 +15,7 @@ async function init() {
   try {
     const options = { useNewUrlParser: true, useUnifiedTopology: true }
 
-    const uri = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASS}@lischanwebshop.kmzytku.mongodb.net/?retryWrites=true&w=majority`
+    const uri = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASS}@lischanwebshop.kmzytku.mongodb.net/products?retryWrites=true&w=majority`
     await mongoose.connect(uri, options)
 
     console.log("Ansluten till databasen")
