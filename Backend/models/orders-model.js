@@ -10,6 +10,7 @@ const OrderSchema = mongoose.Schema({
   //cart: { type: mongoose.Types.ObjectId, ref: "products" },
   isSent: { type: Boolean, required: true },
   delivery: { type: String, required: true },
+  isDeleted: { type: Boolean },
 });
 
 module.exports = mongoose.model("order", OrderSchema);

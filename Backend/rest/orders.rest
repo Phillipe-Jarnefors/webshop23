@@ -1,37 +1,50 @@
-// === alla produkter ===
+// === all orders ===
 
 GET http://localhost:3000/orders
 
 
 ###
 
-// === add product ===
+// === add order ===
 
 POST http://localhost:3000/orders/add
 Content-type: application/json
 
 {
-    "name": "JaCobss",
-    "orderNumber": 1,
+    "name": "Hugo",
+    "orderNumber": 2131,
     "paymentMethod": "Card",
-    "email": "merp@mail.com",
+    "email": "perp@mail.com",
     "phone": 2,
-    "adress": "hyddan 12 Mariestad",
+    "adress": "bordet 12 Ystad",
     //"cart": ,
     "isSent": false,
-    "delivery": "Flaskpost 20230914"
+    "delivery": "Korp 20230914",
+    "isDeleted": false
 }
 
 ###
 
 
-// === update product ===
+// === update order ===
 
-PUT http://localhost:3000/orders/update/650047050df9a59622e40eb3
+PUT http://localhost:3000/orders/update/65005f44a967199ae1e278f7
 Content-Type: application/json
 
 {
     "isSent": true
+}
+
+###
+
+
+// === soft-delete order ===
+
+PUT http://localhost:3000/orders/delete/65005f44a967199ae1e278f7
+Content-Type: application/json
+
+{
+    "isDeleted": true
 }
 
 ###
