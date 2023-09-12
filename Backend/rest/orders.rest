@@ -11,13 +11,16 @@ POST http://localhost:3000/orders/add
 Content-type: application/json
 
 {
-    "name": "Hugo",
-    "orderNumber": 2131,
+    "name": "Sargon",
+    "orderNumber": 1,
     "paymentMethod": "Card",
     "email": "perp@mail.com",
     "phone": 2,
-    "adress": "bordet 12 Ystad",
-    //"cart": ,
+    "adress": "hyddan 12 Mariestad",
+    "cart": [{
+        "productId": "65005ccb511d2f8d52a25be9",
+        "quantity": 2
+    }],
     "isSent": false,
     "delivery": "Korp 20230914",
     "isDeleted": false

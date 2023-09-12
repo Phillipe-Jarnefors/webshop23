@@ -19,9 +19,7 @@ router.get("/orders", async (req, res) => {
 router.post("/orders/add", async (req, res) => {
   try {
     const newOrder = new OrderModel(req.body);
-
     await newOrder.save();
-
     res.status(201).json(newOrder);
   } catch (error) {
     console.error("Error saving the order to the database:", error);
@@ -54,6 +52,7 @@ router.put("/orders/delete/:id", async (req, res) => {
 });
 
 // ===== UPDATE ORDERS =====
+
 
 router.put("/orders/update/:id", async (req, res) => {
   try {
