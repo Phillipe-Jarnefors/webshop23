@@ -1,0 +1,37 @@
+// === alla produkter ===
+
+GET http://localhost:3000/orders
+
+
+###
+
+// === add product ===
+
+POST http://localhost:3000/orders/add
+Content-type: application/json
+
+{
+    "name": "JaCobss",
+    "orderNumber": 1,
+    "paymentMethod": "Card",
+    "email": "merp@mail.com",
+    "phone": 2,
+    "adress": "hyddan 12 Mariestad",
+    //"cart": ,
+    "isSent": false,
+    "delivery": "Flaskpost 20230914"
+}
+
+###
+
+
+// === update product ===
+
+PUT http://localhost:3000/orders/update/650047050df9a59622e40eb3
+Content-Type: application/json
+
+{
+    "isSent": true
+}
+
+###
