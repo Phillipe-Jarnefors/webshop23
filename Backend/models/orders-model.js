@@ -15,6 +15,7 @@ const OrderSchema = mongoose.Schema({
   ],
   isSent: { type: Boolean, required: true },
   delivery: { type: String, required: true },
+  isDeleted: { type: Boolean },
 });
 
 module.exports = mongoose.model("order", OrderSchema);

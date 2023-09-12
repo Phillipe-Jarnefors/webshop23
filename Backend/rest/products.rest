@@ -18,21 +18,26 @@ POST http://localhost:3000/products/add
 Content-type: application/json
 
 {
-    "name": "meme",
-    "image": "https://unsplash.com/photos/3fjyk4CLfvA",
-    "shortDesc": "POTATO!",
-    "description": "POTATO!POTATO!",
-    "price": 1300,
-    "quantity": 12,
-    "isAvailable": true
+    "name": "BigBoi",
+    "image": "https://images.unsplash.com/photo-1557431177-36141475c676?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    "shortDesc": "Hu?",
+    "description": "Bambozeld u got",
+    "price": 100000,
+    "quantity": 1,
+    "isAvailable": true,
+    "isDeleted": false
 }
 
 ###
 
-// === delete product ==
+// === soft-delete product ==
 
-POST http://localhost:3000/products/delete/65000e14a00ec8ab063fba66
+PUT http://localhost:3000/products/delete/65005a6e7a7f6bde07c4e6cd
 Content-Type: application/json
+
+{
+    "isDeleted": true
+}
 
 ###
 
@@ -45,10 +50,11 @@ Content-Type: application/json
     "name": "KAKAN",
     "image": "https://unsplash.com/photos/3fjyk4CLfvA",
     "shortDesc": "POTATO!",
-    "description": "POTATO!POTATO!",
+    "description": "POTATO!POTATO!POTATO!",
     "price": 1300,
     "quantity": 12,
-    "isAvailable": true
+    "isAvailable": true,
+    "isDeleted": false
 }
 
 ###
