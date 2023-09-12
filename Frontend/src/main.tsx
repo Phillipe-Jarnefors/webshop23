@@ -4,6 +4,7 @@ import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements  }
 import './index.css'
 import Layout from "./components/Layout"
 import AllProducts, { loader as allProductsLoader } from './pages/Products/AllProducts'
+import ProductDetail from './Pages/Products/ProductDetail'
 
 
 
@@ -15,6 +16,7 @@ const router = createBrowserRouter(createRoutesFromElements(
         element={<AllProducts />} 
         loader={allProductsLoader}
       />
+      <Route path="/products/productdetail/:productId" element={<ProductDetail/>}/>
     </Route>
   </>
 ))
