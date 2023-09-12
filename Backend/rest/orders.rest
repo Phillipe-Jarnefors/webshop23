@@ -11,15 +11,15 @@ POST http://localhost:3000/orders/add
 Content-type: application/json
 
 {
-    "name": "Emmas",
-    "orderNumber": 12313124122,
+    "name": "JaCobss",
+    "orderNumber": 1,
     "paymentMethod": "Card",
-    "email": "derp@mail.com",
-    "phone": 120213131,
-    "adress": "stenen 12 Skövde",
+    "email": "merp@mail.com",
+    "phone": 2,
+    "adress": "hyddan 12 Mariestad",
     //"cart": ,
     "isSent": false,
-    "delivery": "Duva 20230914"
+    "delivery": "Flaskpost 20230914"
 }
 
 ###
@@ -27,19 +27,11 @@ Content-type: application/json
 
 // === update product ===
 
-PUT http://localhost:3000/orders/update/65002d5c2555d49451e41709
+PUT http://localhost:3000/orders/update/650047050df9a59622e40eb3
 Content-Type: application/json
 
 {
-    "name": "Emmas",
-    "orderNumber": 12019,
-    "paymentMethod": "Card",
-    "email": "derp@mail.com",
-    "phone": 120213131,
-    "adress": "stenen 12 Skövde",
-    //"cart": ,
-    "isSent": false,
-    "delivery": "Duva 20230914"
+    "isSent": true
 }
 
 ###

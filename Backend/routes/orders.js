@@ -34,39 +34,21 @@ router.post("/orders/add", async (req, res) => {
 router.put("/orders/update/:id", async (req, res) => {
   try {
     const orderId = req.params.id;
-    const {
-      name,
-      orderNumber,
-      paymentMethod,
-      email,
-      phone,
-      adress,
-      isSent,
-      delivery,
-    } = req.body;
+    const updateFields = req.body;
 
-    const order = await OrderModel.findById(orderId);
+    const order = await OrderModel.findByIdAndUpdate(orderId, {
+      $set: { isSent: updateFields.isSent },
+    });
 
     if (!order) {
       return res.status(404).json({ message: "Ordern hittades inte" });
     }
 
-    order.name = name;
-    order.orderNumber = orderNumber;
-    order.paymentMethod = paymentMethod;
-    order.email = email;
-    order.phone = phone;
-    order.adress = adress;
-    order.isSent = isSent;
-    order.delivery = delivery;
-
-    await order.save();
-
     res.status(200).json({ message: "Ordern har uppdaterats" });
   } catch (error) {
     console.error("Ett fel uppstod vid uppdateringen av ordern:", error);
     res
-      .sendStatus(500)
+      .status(500)
       .json({ message: "Ett fel uppstod vid uppdateringen av produkten" });
   }
 });
