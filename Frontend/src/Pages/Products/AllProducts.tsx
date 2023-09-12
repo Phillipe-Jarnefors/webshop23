@@ -3,7 +3,7 @@
 
 
 import { getProducts } from "../../api.ts"
-import { Avatar, Paper, Typography } from "@mui/material"
+import { Avatar, Typography } from "@mui/material"
 import { Container } from "@mui/material"
 import { Box } from "@mui/system"
 import { useLoaderData } from "react-router-dom";
@@ -27,6 +27,7 @@ export default function AllProducts() {
         <Typography sx={{ mt: 2 }}>{product.shortDesc}</Typography>
         <Typography>{product.price} {" kr"}</Typography>
       </Box>
+      </Paper>
   ));
 
 
