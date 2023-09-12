@@ -67,3 +67,8 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+img.admin-paper {
+  height: 150px;
+  width: 150px;
+}
