@@ -19,17 +19,15 @@ router.get("/orders", async (req, res) => {
 router.post("/orders/add", async (req, res) => {
   try {
     const newOrder = new OrderModel(req.body);
-
     await newOrder.save();
-
     res.status(201).json(newOrder);
   } catch (error) {
-    console.error("Error saving the product to the database:", error);
-    res.status(500).json({ error: "Error saving the product to the database" });
-  }
-});
+    console.error("Error creating order:", error); 
+    res.status(500).json({ error: "Error creating order" });
+  }})
 
 // ===== UPDATE PRODUCT =====
+
 
 router.put("/orders/update/:id", async (req, res) => {
   try {

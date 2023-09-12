@@ -7,7 +7,12 @@ const OrderSchema = mongoose.Schema({
   email: { type: String, required: true },
   phone: { type: Number, required: true },
   adress: { type: String, required: true },
-  //cart: { type: mongoose.Types.ObjectId, ref: "products" },
+  cart: [
+    {
+      productId: { type: mongoose.Types.ObjectId, ref: "products" },
+      quantity: { type: Number, required: true }
+    }
+  ],
   isSent: { type: Boolean, required: true },
   delivery: { type: String, required: true },
 });

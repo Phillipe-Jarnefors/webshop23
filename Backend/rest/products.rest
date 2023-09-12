@@ -18,7 +18,7 @@ POST http://localhost:3000/products/add
 Content-type: application/json
 
 {
-    "name": "Olga",
+    "name": "meme",
     "image": "https://unsplash.com/photos/3fjyk4CLfvA",
     "shortDesc": "POTATO!",
     "description": "POTATO!POTATO!",

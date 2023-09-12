@@ -11,13 +11,16 @@ POST http://localhost:3000/orders/add
 Content-type: application/json
 
 {
-    "name": "JaCobss",
+    "name": "Phillipe",
     "orderNumber": 1,
     "paymentMethod": "Card",
     "email": "merp@mail.com",
     "phone": 2,
     "adress": "hyddan 12 Mariestad",
-    //"cart": ,
+    "cart": [{
+        "productId": "65005ccb511d2f8d52a25be9",
+        "quantity": 2
+    }],
     "isSent": false,
     "delivery": "Flaskpost 20230914"
 }
