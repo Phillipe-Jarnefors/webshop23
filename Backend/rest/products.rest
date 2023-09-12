@@ -1,0 +1,44 @@
+// === alla produkter ===
+
+GET http://localhost:3000/products
+
+
+###
+
+// === product by id =====
+
+GET http://localhost:3000/products/64ff6229d1c2a1be9a4d0e44
+
+
+###
+
+// === add product ===
+
+POST http://localhost:3000/products/add
+Content-type: application/json
+
+{
+    "name": "Olga",
+    "description": "TestOlga"
+}
+
+###
+
+// === delete product ==
+
+POST http://localhost:3000/products/delete/65000e14a00ec8ab063fba66
+Content-Type: application/json
+
+###
+
+// === update product ===
+
+PUT http://localhost:3000/products/update/64ff6229d1c2a1be9a4d0e44
+Content-Type: application/json
+
+{
+    "name": "Molly", 
+    "description": "Lite uppdateringar" 
+}
+
+###
