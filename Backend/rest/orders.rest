@@ -1,0 +1,45 @@
+// === alla produkter ===
+
+GET http://localhost:3000/orders
+
+
+###
+
+// === add product ===
+
+POST http://localhost:3000/orders/add
+Content-type: application/json
+
+{
+    "name": "Emmas",
+    "orderNumber": 12313124122,
+    "paymentMethod": "Card",
+    "email": "derp@mail.com",
+    "phone": 120213131,
+    "adress": "stenen 12 Skövde",
+    //"cart": ,
+    "isSent": false,
+    "delivery": "Duva 20230914"
+}
+
+###
+
+
+// === update product ===
+
+PUT http://localhost:3000/orders/update/65002d5c2555d49451e41709
+Content-Type: application/json
+
+{
+    "name": "Emmas",
+    "orderNumber": 12019,
+    "paymentMethod": "Card",
+    "email": "derp@mail.com",
+    "phone": 120213131,
+    "adress": "stenen 12 Skövde",
+    //"cart": ,
+    "isSent": false,
+    "delivery": "Duva 20230914"
+}
+
+###

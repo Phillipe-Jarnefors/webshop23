@@ -19,7 +19,12 @@ Content-type: application/json
 
 {
     "name": "Olga",
-    "description": "TestOlga"
+    "image": "https://unsplash.com/photos/3fjyk4CLfvA",
+    "shortDesc": "POTATO!",
+    "description": "POTATO!POTATO!",
+    "price": 1300,
+    "quantity": 12,
+    "isAvailable": true
 }
 
 ###
@@ -33,12 +38,17 @@ Content-Type: application/json
 
 // === update product ===
 
-PUT http://localhost:3000/products/update/64ff6229d1c2a1be9a4d0e44
+PUT http://localhost:3000/products/update/65001c6d32af6a7c3d74aa06
 Content-Type: application/json
 
 {
-    "name": "Molly", 
-    "description": "Lite uppdateringar" 
+    "name": "KAKAN",
+    "image": "https://unsplash.com/photos/3fjyk4CLfvA",
+    "shortDesc": "POTATO!",
+    "description": "POTATO!POTATO!",
+    "price": 1300,
+    "quantity": 12,
+    "isAvailable": true
 }
 
 ###
