@@ -8,6 +8,8 @@ const ProductSchema = mongoose.Schema({
   price: { type: Number, required: true },
   quantity: { type: Number, required: true },
   isAvailable: { type: Boolean, required: true },
-})
+  isDeleted: { type: Boolean },
+});
 
-module.exports = mongoose.model("product", ProductSchema)
+module.exports = mongoose.model("product", ProductSchema);
+

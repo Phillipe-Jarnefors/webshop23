@@ -1,30 +1,23 @@
 /* eslint-disable react-refresh/only-export-components */
 
-import { useLoaderData } from "react-router-dom"
+
+
 import { getProducts } from "../../api.ts"
 import { Avatar, Paper, Typography } from "@mui/material"
 import { Container } from "@mui/material"
 import { Box } from "@mui/system"
-
-interface Product {
-  _id: string,
-  name: string,
-  image: string,
-  shortDesc:  string,
-  description: string,
-  price: number,
-  quantity: number,
-  isAvailable: boolean
-}
+import { useLoaderData } from "react-router-dom";
+import { Paper } from "@mui/material";
+import { Product } from "../../Utilities/Interfaces.ts";
 
 
 export function loader(): Promise<Product[]> {
-  return getProducts()
+  return getProducts();
 }
 
-
 export default function AllProducts() {
-  const products = useLoaderData() as Product[]
+  const products = useLoaderData() as Product[];
+
 
   const productsElements = products.map(product => (
     <Paper elevation={2} key={product._id} sx={{ minWidth: 210, width: { md: 340 } }}>
@@ -34,8 +27,8 @@ export default function AllProducts() {
         <Typography sx={{ mt: 2 }}>{product.shortDesc}</Typography>
         <Typography>{product.price} {" kr"}</Typography>
       </Box>
-    </Paper>
-  ))
+  ));
+
 
   return (
     <Container>
