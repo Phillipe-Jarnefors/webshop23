@@ -7,7 +7,7 @@ GET http://localhost:3000/products
 
 // === product by id =====
 
-GET http://localhost:3000/products/64ff6229d1c2a1be9a4d0e44
+GET http://localhost:3000/products/650022232add00d8c0438d19
 
 
 ###
@@ -18,12 +18,12 @@ POST http://localhost:3000/products/add
 Content-type: application/json
 
 {
-    "name": "BigBoi",
+    "name": "AnotherBigBoi",
     "image": "https://images.unsplash.com/photo-1557431177-36141475c676?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-    "shortDesc": "Hu?",
-    "description": "Bambozeld u got",
-    "price": 100000,
-    "quantity": 1,
+    "shortDesc": "HoHo?",
+    "description": "Bambozeld u got again",
+    "price": 1000002,
+    "quantity": 2,
     "isAvailable": true,
     "isDeleted": false
 }
@@ -32,7 +32,7 @@ Content-type: application/json
 
 // === soft-delete product ==
 
-PUT http://localhost:3000/products/delete/65005a6e7a7f6bde07c4e6cd
+PUT http://localhost:3000/products/delete/650022232add00d8c0438d19
 Content-Type: application/json
 
 {
@@ -55,6 +55,17 @@ Content-Type: application/json
     "quantity": 12,
     "isAvailable": true,
     "isDeleted": false
+}
+
+###
+
+// === update availability ==
+
+PUT http://localhost:3000/products/available/65005ccb511d2f8d52a25be9
+Content-Type: application/json
+
+{
+    "isAvailable": false
 }
 
 ###

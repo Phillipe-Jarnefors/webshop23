@@ -4,7 +4,7 @@ const OrderModel = require("../models/orders-model");
 
 //=== ORDERS ===
 
-router.get("/orders", async (req, res) => {
+router.get("/", async (req, res) => {
   const orders = await OrderModel.find();
   if (orders) {
     res.status(200).json(orders);
@@ -16,7 +16,7 @@ router.get("/orders", async (req, res) => {
 
 //=== ADD ORDERS ===
 
-router.post("/orders/add", async (req, res) => {
+router.post("/add", async (req, res) => {
   try {
     const newOrder = new OrderModel(req.body);
     await newOrder.save();
@@ -29,7 +29,7 @@ router.post("/orders/add", async (req, res) => {
 
 // ===== SOFT DELETE ORDER =====
 
-router.put("/orders/delete/:id", async (req, res) => {
+router.put("/delete/:id", async (req, res) => {
   try {
     const orderId = req.params.id;
     const updateFields = req.body;
@@ -53,8 +53,7 @@ router.put("/orders/delete/:id", async (req, res) => {
 
 // ===== UPDATE ORDERS =====
 
-
-router.put("/orders/update/:id", async (req, res) => {
+router.put("/update/:id", async (req, res) => {
   try {
     const orderId = req.params.id;
     const updateFields = req.body;
