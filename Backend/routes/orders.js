@@ -18,13 +18,11 @@ router.get("/orders", async (req, res) => {
 
 router.post("/orders/add", async (req, res) => {
   try {
-    // Create a new Product document based on the request body
     const newOrder = new OrderModel(req.body);
 
-    // Save the newProduct document to the database
     await newOrder.save();
 
-    res.status(201).json(newOrder); // Respond with the saved product
+    res.status(201).json(newOrder);
   } catch (error) {
     console.error("Error saving the product to the database:", error);
     res.status(500).json({ error: "Error saving the product to the database" });
@@ -53,7 +51,6 @@ router.put("/orders/update/:id", async (req, res) => {
       return res.status(404).json({ message: "Ordern hittades inte" });
     }
 
-    // uppdatera produktens uppgifter
     order.name = name;
     order.orderNumber = orderNumber;
     order.paymentMethod = paymentMethod;
@@ -63,7 +60,6 @@ router.put("/orders/update/:id", async (req, res) => {
     order.isSent = isSent;
     order.delivery = delivery;
 
-    // spara uppdateringar i databasen
     await order.save();
 
     res.status(200).json({ message: "Ordern har uppdaterats" });
