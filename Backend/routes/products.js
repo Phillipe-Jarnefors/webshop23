@@ -4,7 +4,7 @@ const ProductModel = require("../models/products-model");
 
 //=== PRODUCTS ===
 
-router.get("/products", async (req, res) => {
+router.get("/", async (req, res) => {
   const products = await ProductModel.find();
   if (products) {
     res.status(200).json(products);
@@ -16,7 +16,7 @@ router.get("/products", async (req, res) => {
 
 // ===== PRODUCT BY ID  =====
 
-router.get("/products/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const productId = req.params.id;
     const product = await ProductModel.findById(productId);
@@ -35,7 +35,7 @@ router.get("/products/:id", async (req, res) => {
 
 //=== ADD PRODUCT ===
 
-router.post("/products/add", async (req, res) => {
+router.post("/add", async (req, res) => {
   try {
     // Create a new Product document based on the request body
     const newProduct = new ProductModel(req.body);
@@ -52,7 +52,7 @@ router.post("/products/add", async (req, res) => {
 
 // ===== SOFT-DELETE PRODUCT ======
 
-router.put("/products/delete/:id", async (req, res) => {
+router.put("/delete/:id", async (req, res) => {
   try {
     const productId = req.params.id;
     const updateFields = req.body;
@@ -74,7 +74,7 @@ router.put("/products/delete/:id", async (req, res) => {
 
 // ===== UPDATE PRODUCT =====
 
-router.put("/products/update/:id", async (req, res) => {
+router.put("/update/:id", async (req, res) => {
   try {
     const productId = req.params.id;
     const { name, description } = req.body;
@@ -98,6 +98,32 @@ router.put("/products/update/:id", async (req, res) => {
     res
       .sendStatus(500)
       .json({ message: "Ett fel uppstod vid uppdateringen av produkten" });
+  }
+});
+
+// ===== UPDATE AVAILABILITY ======
+
+router.put("/available/:id", async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const updateFields = req.body;
+
+    const product = await ProductModel.findByIdAndUpdate(productId, {
+      $set: { isAvailable: updateFields.isAvailable },
+    });
+
+    if (!product) {
+      return res
+        .status(404)
+        .json({ message: "No product found for updating availability" });
+    }
+
+    res.status(200).json({ message: "Updated products availability" });
+  } catch (error) {
+    console.error("Error when updating availability: ", error);
+    res
+      .status(500)
+      .json({ message: "Error when updating the products availability" });
   }
 });
 module.exports = router;
