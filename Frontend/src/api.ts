@@ -17,9 +17,6 @@ export async function removeProduct(id: string) {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      isDeleted: true,
-    }),
   };
   try {
     const res = await fetch(
@@ -40,7 +37,7 @@ export async function getProductById(productId: string) {
   try {
     const res = await fetch(`http://localhost:3000/products/${productId}`);
 
-    if (!res.ok) {
+    if(!res.ok) {
       throw new Error("Failed loading data");
     }
 
@@ -49,31 +46,5 @@ export async function getProductById(productId: string) {
   } catch (error) {
     console.error("Ett fel uppstod vid hämtning av produkt:", error);
     throw error;
-  }
-}
-
-export async function updateAvailability(
-  productId: string,
-  available: boolean
-) {
-  const settings = {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      isAvailable: available,
-    }),
-  };
-  try {
-    const res = await fetch(
-      `http://localhost:3000/products/available/${productId}`,
-      settings
-    );
-    const data = await res.json();
-
-    return data;
-  } catch (error) {
-    console.error(error);
   }
 }
