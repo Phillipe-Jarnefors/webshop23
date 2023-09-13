@@ -4,10 +4,10 @@ import { getProducts } from "../../api.ts";
 import { Avatar, Typography, Button, Container, Paper } from "@mui/material";
 import { Box } from "@mui/system";
 import { useLoaderData, Link } from "react-router-dom";
-import { Product } from "../../utilities/Interfaces.ts";
+import { Product } from "../../Utilities/Interfaces.ts";
 import { useContext } from "react";
-import { CartContext } from "../../Utilities/CartContext.tsx";
 import CartIcon from "@mui/icons-material/AddShoppingCart";
+import { CartContext } from "../../Utilities/CartContext.tsx"
 
 export function loader(): Promise<Product[]> {
   return getProducts();

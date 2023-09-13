@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Paper, Typography, Avatar, Container } from '@mui/material';
 //import { Box } from "@mui/system";
 import { getProductById } from '../../api.ts';
-import { Product } from '../../Utilities/Interfaces.ts';
+import { Product } from '../../Utilities/Interfaces.ts'
 import { useNavigate } from "react-router";
 
 import  Button  from "@mui/material/Button";
@@ -11,7 +11,7 @@ import CartIcon from "@mui/icons-material/AddShoppingCart";
 
 export default function ProductDetail() {
 
-    const { productId } = useParams();
+    const { productId } = useParams<{ productId: string }>();
     const [product, setProduct] = useState<Product | null>(null);
 
     const navigate = useNavigate();
