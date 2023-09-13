@@ -1,3 +1,5 @@
+import { ReactNode} from "react";
+
 export interface Product {
   _id: string;
   name: string;
@@ -8,4 +10,17 @@ export interface Product {
   quantity: number;
   isAvailable: boolean;
   isDeleted: boolean;
+}
+
+export interface CartProduct extends Product{
+  quantity: number;
+}
+
+export interface CartContextValue{
+  cart: CartProduct[],
+  addToCart: (product: Product) => void;
+}
+
+export interface Props {
+  children: ReactNode;
 }

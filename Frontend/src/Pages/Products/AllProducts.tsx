@@ -9,6 +9,8 @@ import { Box } from "@mui/system";
 import { useLoaderData } from "react-router-dom";
 import { Paper } from "@mui/material";
 import { Product } from "../../Utilities/Interfaces.ts";
+import { useContext } from "react";
+import { CartContext } from "../../Utilities/CartContext.tsx";
 
 import Button from "@mui/material/Button";
 import CartIcon from "@mui/icons-material/AddShoppingCart";
@@ -18,6 +20,7 @@ export function loader(): Promise<Product[]> {
 }
 
 export default function AllProducts() {
+  const { addToCart } = useContext(CartContext);
   const products = useLoaderData() as Product[];
 
   const navigate = useNavigate();
@@ -65,7 +68,7 @@ export default function AllProducts() {
         <Button
           variant="contained"
           endIcon={<CartIcon />}
-          //onClick={() => addToCart(product)}
+          onClick={() => addToCart(product)}
         >
           Lägg till
         </Button>
