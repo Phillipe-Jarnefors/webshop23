@@ -3,7 +3,7 @@
 import { getProducts } from "../../api.ts";
 import { Avatar, Typography, Button, Container, Paper } from "@mui/material";
 import { Box } from "@mui/system";
-import { useLoaderData, Link } from "react-router-dom";
+import { useLoaderData, Link, useNavigate } from "react-router-dom";
 import { Product } from "../../Utilities/Interfaces.ts";
 import { useContext } from "react";
 import CartIcon from "@mui/icons-material/AddShoppingCart";
@@ -16,6 +16,15 @@ export function loader(): Promise<Product[]> {
 export default function AllProducts() {
   const { addToCart } = useContext(CartContext);
   const products = useLoaderData() as Product[];
+
+  const navigate = useNavigate();
+  
+  const handleCardClick = (product: Product) => {
+    console.log("klick på card!");
+    
+    // navigera till sidan ProductDetail.tsx när man klickar på produkt
+    navigate(`/products/productdetail/${product._id}`);
+}
 
   const productsElements = products.map((product) => (
     <Paper
@@ -42,6 +51,7 @@ export default function AllProducts() {
           alt={product.name}
           src={product.image}
           style={{ width: 200, height: 200 }}
+          onClick={() => handleCardClick(product)}
         />
         <Typography sx={{ mt: 2 }}>{product.shortDesc}</Typography>
         <Typography>
