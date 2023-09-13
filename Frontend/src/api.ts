@@ -1,3 +1,5 @@
+import { AddProduct, Product } from "./Utilities/Interfaces";
+
 export async function getProducts() {
   const res = await fetch("http://localhost:3000/products");
 
@@ -71,9 +73,36 @@ export async function updateAvailability(
       settings
     );
     const data = await res.json();
-
+      console.log(data.message);
+      
     return data;
   } catch (error) {
     console.error(error);
+  }
+}
+
+export async function addNewProduct(product: AddProduct) {
+  const settings = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      "name": product.productName,
+      "image": product.image,
+      "shortDesc": product.shortDesc,
+      "description":  product.description,
+      "price":  product.price,
+      "quantity":  product.quantity,
+      "isAvailable":  product.isAvailable,
+      "isDeleted": false
+    })
+  }
+  try {
+    const res = await fetch(`http://localhost:3000/products/add, ${settings}`)
+    const data = await res.json()
+    return data
+  } catch(error) {
+    console.error(error)
   }
 }

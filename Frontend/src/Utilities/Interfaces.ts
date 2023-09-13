@@ -12,6 +12,17 @@ export interface Product {
   isAvailable: boolean;
 }
 
+export interface AddProduct {
+  productName: string;
+  image: string;
+  shortDesc: string;
+  description: string;
+  price: number;
+  quantity: number;
+  isDeleted: boolean;
+  isAvailable: boolean;
+}
+
 export interface CartProduct extends Product{
   quantity: number;
 }
