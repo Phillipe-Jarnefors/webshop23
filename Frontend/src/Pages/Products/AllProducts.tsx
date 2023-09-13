@@ -7,12 +7,15 @@ import { Box } from "@mui/system";
 import { useLoaderData } from "react-router-dom";
 import { Paper } from "@mui/material";
 import { Product } from "../../Utilities/Interfaces.ts";
+import { useContext } from "react";
+import { CartContext } from "../../Utilities/CartContext.tsx";
 
 export function loader(): Promise<Product[]> {
   return getProducts();
 }
 
 export default function AllProducts() {
+  const { addToCart } = useContext(CartContext);
   const products = useLoaderData() as Product[];
 
   const productsElements = products.map((product) => (
@@ -45,6 +48,14 @@ export default function AllProducts() {
         <Typography>
           {product.price} {" kr"}
         </Typography>
+        <Link to="/products/productdetail"></Link>
+        <Button
+          variant="contained"
+          endIcon={<CartIcon />}
+          onClick={() => addToCart(product)}
+        >
+          Lägg till
+        </Button>
       </Box>
     </Paper>
   ));
