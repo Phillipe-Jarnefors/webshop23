@@ -32,3 +32,19 @@ export async function removeProduct(id: string) {
     console.error(error);
   }
 }
+
+export async function getProductById(productId: string) {
+  try {
+    const res = await fetch(`http://localhost:3000/products/${productId}`);
+
+    if(!res.ok) {
+      throw new Error("Failed loading data");
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Ett fel uppstod vid hämtning av produkt:", error);
+    throw error;
+  }
+}
