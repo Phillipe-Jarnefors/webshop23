@@ -1,14 +1,13 @@
 /* eslint-disable react-refresh/only-export-components */
 
 import { getProducts } from "../../api.ts";
-import { Avatar, Typography } from "@mui/material";
-import { Container } from "@mui/material";
+import { Avatar, Typography, Button, Container, Paper } from "@mui/material";
 import { Box } from "@mui/system";
-import { useLoaderData } from "react-router-dom";
-import { Paper } from "@mui/material";
-import { Product } from "../../Utilities/Interfaces.ts";
+import { useLoaderData, Link } from "react-router-dom";
+import { Product } from "../../utilities/Interfaces.ts";
 import { useContext } from "react";
 import { CartContext } from "../../Utilities/CartContext.tsx";
+import CartIcon from "@mui/icons-material/AddShoppingCart";
 
 export function loader(): Promise<Product[]> {
   return getProducts();
