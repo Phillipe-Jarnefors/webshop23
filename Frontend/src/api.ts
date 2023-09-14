@@ -99,7 +99,7 @@ export async function addNewProduct(product: AddProduct) {
     })
   }
   try {
-    const res = await fetch(`http://localhost:3000/products/add, ${settings}`)
+    const res = await fetch('http://localhost:3000/products/add', settings)
     const data = await res.json()
     return data
   } catch(error) {

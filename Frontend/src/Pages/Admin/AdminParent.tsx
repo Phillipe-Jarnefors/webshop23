@@ -16,6 +16,7 @@ export async function loader(): Promise<Product[]> {
 }
 
 export default function AdminParent() {
+  const products = useLoaderData() as Product[];
 
   const [isAvailable, setIsAvailable] = useState(true);
   const [formProduct, setFormProduct] = useState<AddProduct>({
@@ -29,22 +30,30 @@ export default function AdminParent() {
       isAvailable: true
   })
 
-  function handleChange(e: React.FormEvent)   {
-    const { name, value } = e.target as HTMLInputElement
 
-    setFormProduct(prevState => ({
-      ...prevState,
-      [name]: value
-    }))
+
+
+  function handleChange(e: React.FormEvent) {
+    const { name, value, type, checked } = e.target as HTMLInputElement;
+    if (type === "checkbox") {
+      setFormProduct((prevState) => ({
+        ...prevState,
+        [name]: checked,
+      }));
+    } else {
+      setFormProduct((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
   }
 
   function sendNewProduct(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
+    e.preventDefault();
     addNewProduct(formProduct)
   }
 
-  const products = useLoaderData() as Product[];
-
+  
 
 
   const displayedProducts = products.filter(
@@ -56,17 +65,19 @@ export default function AdminParent() {
     return await removeProduct(id);
   };
 
-  const toggleAvailablitity = async (id: string, isAvailable: boolean) => {
-    setIsAvailable(!isAvailable);
-    return await updateAvailability(id, isAvailable);
+  const toggleAvailablitity =  (id: string, isAvailable: boolean) => {
+    setIsAvailable(prevState => !prevState);
+    console.log(isAvailable)
+    return updateAvailability(id, isAvailable);
   };
+  
 
 
   const productElements = displayedProducts.map((product) => (
     <Paper
       elevation={2}
       key={product._id}
-      sx={{ minWidth: 210, width: { md: 340 }, bgcolor: product.isAvailable ? "blue" : "red"}}
+      sx={{ minWidth: 210, width: { md: 340 }}}
     >
    
       <Box
@@ -74,7 +85,7 @@ export default function AdminParent() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          m: 1,
+          m: 1, bgcolor: product.isAvailable ? "red" : "blue"
         }}
       >
         <Typography
@@ -114,7 +125,7 @@ export default function AdminParent() {
       <form onSubmit={sendNewProduct}>
         <fieldset>
           <legend>Create new product</legend>
-          <input onChange={handleChange} name="name" type="text" placeholder="Name" />
+          <input onChange={handleChange} name="productName" type="text" placeholder="Name"  required />
           <input onChange={handleChange} name="image" type="text" placeholder="Image-url" />
           <textarea onChange={handleChange} name="shortDesc" placeholder="Short Description" />
           <textarea onChange={handleChange} name="description"  placeholder="Description" />
