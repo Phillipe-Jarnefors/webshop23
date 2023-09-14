@@ -28,20 +28,20 @@ const router = createBrowserRouter(
     <>
       <Route path="/" element={<Layout />}>
         <Route index element={<AllProducts />} loader={allProductsLoader} />
+        <Route
+          path="/admin"
+          element={<AdminParent />}
+          loader={adminProductsLoader}
+        />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/userinfo" element={<PersonalInformation />} />
+        <Route path="/shippingmethod" element={<ShippingMethod />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route
+          path="/products/productdetail/:productId"
+          element={<ProductDetail />}
+        />
       </Route>
-      <Route
-        path="/admin"
-        element={<AdminParent />}
-        loader={adminProductsLoader}
-      />
-      <Route path="/cart" element={<Cart />} />
-      <Route path="/userinfo" element={<PersonalInformation />} />
-      <Route path="/shippingmethod" element={<ShippingMethod />} />
-      <Route path="/checkout" element={<Checkout />} />
-      <Route
-        path="/products/productdetail/:productId"
-        element={<ProductDetail />}
-      />
     </>
   )
 );

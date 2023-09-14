@@ -21,7 +21,6 @@ export default function AllProducts() {
 
   const handleCardClick = (product: Product) => {
     console.log("klick på card!");
-
     navigate(`/products/productdetail/${product._id}`);
   };
 
@@ -60,12 +59,12 @@ export default function AllProducts() {
         <Button
           variant="contained"
           endIcon={<CartIcon />}
-          sx={{ marginBottom: "10px"}}
+          sx={{ marginBottom: "10px" }}
           // onClick={() => addToCart(product)}
           onClick={() => {
             addToCart(product);
             alert("Produkten har lagts till i kundvagnen.");
-        }} 
+          }}
         >
           Lägg till
         </Button>
@@ -74,13 +73,7 @@ export default function AllProducts() {
   ));
 
   return (
-    <Container sx={{
-      display: "flex",
-      flex: "1",
-      flexWrap: "wrap",
-      alignItems: "center",
-      m: 1,
-    }}>
+    <Container>
       <Box
         sx={{
           display: "flex",
@@ -88,7 +81,6 @@ export default function AllProducts() {
           flexWrap: "wrap",
           flexDirection: { xs: "column", md: "row" },
           justifyContent: "space-around",
-          flexWrap: "wrap",
           gap: 4,
         }}
       >
