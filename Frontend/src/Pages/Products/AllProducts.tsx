@@ -60,7 +60,6 @@ export default function AllProducts() {
           variant="contained"
           endIcon={<CartIcon />}
           sx={{ marginBottom: "10px" }}
-          // onClick={() => addToCart(product)}
           onClick={() => {
             addToCart(product);
             alert("Produkten har lagts till i kundvagnen.");
