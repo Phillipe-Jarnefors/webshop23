@@ -7,7 +7,7 @@ import { useLoaderData, Link, useNavigate } from "react-router-dom";
 import { Product } from "../../Utilities/Interfaces.ts";
 import { useContext } from "react";
 import CartIcon from "@mui/icons-material/AddShoppingCart";
-import { CartContext } from "../../Utilities/CartContext.tsx"
+import { CartContext } from "../../Utilities/CartContext.tsx";
 
 export function loader(): Promise<Product[]> {
   return getProducts();
@@ -18,13 +18,13 @@ export default function AllProducts() {
   const products = useLoaderData() as Product[];
 
   const navigate = useNavigate();
-  
+
   const handleCardClick = (product: Product) => {
     console.log("klick på card!");
-    
+
     // navigera till sidan ProductDetail.tsx när man klickar på produkt
     navigate(`/products/productdetail/${product._id}`);
-}
+  };
 
   const productsElements = products.map((product) => (
     <Paper
