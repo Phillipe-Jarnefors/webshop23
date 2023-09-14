@@ -4,12 +4,18 @@ import { Paper, Typography, Avatar, Container } from '@mui/material';
 //import { Box } from "@mui/system";
 import { getProductById } from '../../api.ts';
 import { Product } from '../../Utilities/Interfaces.ts'
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { CartContext } from '../../Utilities/CartContext';
+
 
 import  Button  from "@mui/material/Button";
 import CartIcon from "@mui/icons-material/AddShoppingCart";
 
+
 export default function ProductDetail() {
+
+    const { addToCart } = useContext(CartContext);
 
     const { productId } = useParams<{ productId: string }>();
     const [product, setProduct] = useState<Product | null>(null);
@@ -17,8 +23,13 @@ export default function ProductDetail() {
     const navigate = useNavigate();
     const goBack = () => navigate(-1);
 
+    const goToCartClick = () => {
+        console.log("klick på card!");
+        navigate(`/cart`);
+    }
+
     useEffect(() => {
-        // Hämta detaljerad produktinformation från ditt API baserat på productId
+        // hämta detaljerad produktinformation från API baserat på productId
         const fetchData = async () => {
           try {
             const selectedProduct = await getProductById(productId);
@@ -36,7 +47,7 @@ export default function ProductDetail() {
         <>
         <div>
             <button onClick={goBack}>TILL BUTIKEN</button>
-            <button>TILL KASSAN</button>
+            <button onClick={goToCartClick}>TILL KASSAN</button>
 
         </div>
         <Container>
@@ -49,14 +60,18 @@ export default function ProductDetail() {
                 variant="rounded"
                 alt={product.name}
                 src={product.image}
-                style={{ width: 300, height: 300 }}
+                style={{ width: 340, height: 360 }}
               />
               <Typography variant="h6" sx={{ mt: 3 }}>{product.description}</Typography>
               <Typography variant="h3" sx={{ mt: 3, color: 'black' }}>Pris: {product.price} kr</Typography>
               <Button 
                     variant="contained" 
                     endIcon={<CartIcon />} 
-                    //onClick={() => addToCart(product)}
+                    // onClick={() => addToCart(product)}
+                    onClick={() => {
+                        addToCart(product);
+                        alert("Produkten har lagts till i kundvagnen."); 
+                    }}
                 >Lägg till</Button> 
             
             </Paper>

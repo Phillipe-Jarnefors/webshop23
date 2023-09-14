@@ -18,6 +18,7 @@ export interface CartProduct extends Product{
 export interface CartContextValue{
   cart: CartProduct[],
   addToCart: (product: Product) => void;
+  removeFromCart : (productId: string) => void;
 }
 
 export interface Props {
