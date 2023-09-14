@@ -48,3 +48,4 @@ export async function getProductById(productId: string) {
     throw error;
   }
 }
+

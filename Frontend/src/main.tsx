@@ -19,6 +19,9 @@ import AdminParent, {
 } from "./Pages/Admin/AdminParent";
 import Cart from "./Pages/Cart/Cart";
 import { CartProvider } from "./Utilities/CartContext";
+import PersonalInformation from "./Pages/Cart/PersonalInformation";
+import ShippingMethod from "./Pages/Cart/ShippingMethod";
+import Checkout from "./Pages/Cart/Checkout";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -32,6 +35,9 @@ const router = createBrowserRouter(
         loader={adminProductsLoader}
       />
       <Route path="/cart" element={<Cart />} />
+      <Route path="/userinfo" element={<PersonalInformation />} />
+      <Route path="/shippingmethod" element={<ShippingMethod />} />
+      <Route path="/checkout" element={<Checkout />} />
       <Route
         path="/products/productdetail/:productId"
         element={<ProductDetail />}

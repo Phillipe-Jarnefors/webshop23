@@ -7,7 +7,8 @@ import { useLoaderData, Link, useNavigate } from "react-router-dom";
 import { Product } from "../../Utilities/Interfaces.ts";
 import { useContext } from "react";
 import CartIcon from "@mui/icons-material/AddShoppingCart";
-import { CartContext } from "../../Utilities/CartContext.tsx"
+import { CartContext } from "../../Utilities/CartContext.tsx";
+
 
 export function loader(): Promise<Product[]> {
   return getProducts();
@@ -21,8 +22,6 @@ export default function AllProducts() {
   
   const handleCardClick = (product: Product) => {
     console.log("klick på card!");
-    
-    // navigera till sidan ProductDetail.tsx när man klickar på produkt
     navigate(`/products/productdetail/${product._id}`);
 }
 
@@ -30,7 +29,7 @@ export default function AllProducts() {
     <Paper
       elevation={2}
       key={product._id}
-      sx={{ minWidth: 210, width: { md: 340 } }}
+      sx={{ minWidth: 260, width: { md: 200} }}
     >
       <Box
         sx={{
@@ -61,7 +60,12 @@ export default function AllProducts() {
         <Button
           variant="contained"
           endIcon={<CartIcon />}
-          onClick={() => addToCart(product)}
+          sx={{ marginBottom: "10px"}}
+          // onClick={() => addToCart(product)}
+          onClick={() => {
+            addToCart(product);
+            alert("Produkten har lagts till i kundvagnen.");
+        }} 
         >
           Lägg till
         </Button>
@@ -70,10 +74,18 @@ export default function AllProducts() {
   ));
 
   return (
-    <Container>
+    <Container sx={{
+      display: "flex",
+      flex: "1",
+      flexWrap: "wrap",
+      alignItems: "center",
+      m: 1,
+    }}>
       <Box
         sx={{
           display: "flex",
+          flex: "1",
+          flexWrap: "wrap",
           flexDirection: { xs: "column", md: "row" },
           justifyContent: "space-around",
           gap: 4,
