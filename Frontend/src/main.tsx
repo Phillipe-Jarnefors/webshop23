@@ -19,6 +19,7 @@ import AdminParent, {
 } from "./Pages/Admin/AdminParent";
 import Cart from "./Pages/Cart/Cart";
 import { CartProvider } from "./Utilities/CartContext";
+import { Action as EditProductAction } from "./Pages/Admin/AdminEditProduct";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -30,6 +31,7 @@ const router = createBrowserRouter(
         path="/admin"
         element={<AdminParent />}
         loader={adminProductsLoader}
+        action={EditProductAction}
       />
       <Route path="/cart" element={<Cart />} />
       <Route

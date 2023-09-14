@@ -106,3 +106,30 @@ export async function addNewProduct(product: AddProduct) {
     console.error(error)
   }
 }
+
+export async function updateProduct(product: AddProduct) {
+  const settings = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      "_id": product.productId,
+      "name": product.productName,
+      "image": product.image,
+      "shortDesc": product.shortDesc,
+      "description":  product.description,
+      "price":  product.price,
+      "quantity":  product.quantity,
+      "isAvailable":  product.isAvailable,
+      "isDeleted": false
+    })
+  }
+  try {
+    const res = await fetch('http://localhost:3000/products/update/', settings)
+    const data = await res.json()
+    return data
+  } catch(error) {
+    console.error(error)
+  }
+}

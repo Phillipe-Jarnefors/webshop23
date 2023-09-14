@@ -8,6 +8,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
 import BackHandIcon from "@mui/icons-material/BackHand";
 import { useEffect, useState } from "react";
+import AdminEditProduct from "./AdminEditProduct.tsx";
 
 
 export async function loader(): Promise<Product[]> {
@@ -16,6 +17,8 @@ export async function loader(): Promise<Product[]> {
 
 export default function AdminParent() {
   const products = useLoaderData() as Product[];
+
+  const [toggle, setToggle] = useState(false)
 
   const [productAvailability, setProductAvailability] = useState<{ [key: string]: boolean }>({});
   const [formProduct, setFormProduct] = useState<AddProduct>({
@@ -30,17 +33,12 @@ export default function AdminParent() {
   })
 
   useEffect(() => {
-
     const initialProductAvailability = products.reduce((acc, product) => {
       return { ...acc, [product._id]: product.isAvailable };
     }, {});
     setProductAvailability(initialProductAvailability);
   }, [products]);
 
-  
-
-
- console.log(productAvailability)
 
   function handleChange(e: React.FormEvent) {
     const { name, value, type, checked } = e.target as HTMLInputElement;
@@ -123,13 +121,15 @@ export default function AdminParent() {
           {product.quantity} {" st"}
         </Typography>
         <Link to="/products/productdetail"></Link>
-        <EditIcon onClick={() => console.log("Edit")} />
+        <EditIcon onClick={() => setToggle(!toggle)} />
+        {toggle && <AdminEditProduct productId={product._id} />}
         <DeleteForeverIcon onClick={() => removedProductData(product._id)} />
         <BackHandIcon
         sx={{ padding: "1rem" }}
         onClick={() => toggleAvailability(product._id)}
       />
       </Box>
+      
     </Paper>
 
   ));
@@ -157,16 +157,3 @@ export default function AdminParent() {
     </div>);
 }
 
-
-    ///
-  //   <Paper elevation={2} key={product._id}>
-  //   <img className="admin-paper" src={product.image} alt={product.name} />
-  //   <ul>
-  //     <li>{product.name}</li>
-  //     <li>{product.shortDesc}</li>
-  //     <li>{product.price}</li>
-  //     <li>{product.quantity}</li>
-  //   </ul>
-  //   <EditIcon onClick={() => console.log("Edit")} />
-  //   <DeleteForeverIcon onClick={() => removedProductData(product._id)} />
-  // </Paper>
