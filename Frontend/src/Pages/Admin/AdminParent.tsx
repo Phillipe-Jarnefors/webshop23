@@ -10,7 +10,6 @@ import BackHandIcon from "@mui/icons-material/BackHand";
 import { useEffect, useState } from "react";
 
 
-
 export async function loader(): Promise<Product[]> {
   return await getProducts();
 }
@@ -18,7 +17,7 @@ export async function loader(): Promise<Product[]> {
 export default function AdminParent() {
   const products = useLoaderData() as Product[];
 
-  const [isAvailable, setIsAvailable] = useState(true);
+  const [productAvailability, setProductAvailability] = useState<{ [key: string]: boolean }>({});
   const [formProduct, setFormProduct] = useState<AddProduct>({
       productName: "",
       image: "",
@@ -30,8 +29,18 @@ export default function AdminParent() {
       isAvailable: true
   })
 
+  useEffect(() => {
+
+    const initialProductAvailability = products.reduce((acc, product) => {
+      return { ...acc, [product._id]: product.isAvailable };
+    }, {});
+    setProductAvailability(initialProductAvailability);
+  }, [products]);
+
+  
 
 
+ console.log(productAvailability)
 
   function handleChange(e: React.FormEvent) {
     const { name, value, type, checked } = e.target as HTMLInputElement;
@@ -53,8 +62,6 @@ export default function AdminParent() {
     addNewProduct(formProduct)
   }
 
-  
-
 
   const displayedProducts = products.filter(
     (product) => product.isDeleted !== true
@@ -65,12 +72,22 @@ export default function AdminParent() {
     return await removeProduct(id);
   };
 
-  const toggleAvailablitity =  (id: string, isAvailable: boolean) => {
-    setIsAvailable(prevState => !prevState);
-    console.log(isAvailable)
-    return updateAvailability(id, isAvailable);
+  const toggleAvailability = async (id: string) => {
+    try {
+      const newAvailability = !productAvailability[id];
+
+      setProductAvailability((prevState) => ({
+        ...prevState,
+        [id]: newAvailability,
+      }));
+
+      await updateAvailability(id, newAvailability);
+    } catch (error) {
+      console.error("Error when updating availability: ", error);
+      // Handle the error appropriately
+    }
   };
-  
+
 
 
   const productElements = displayedProducts.map((product) => (
@@ -85,7 +102,7 @@ export default function AdminParent() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          m: 1, bgcolor: product.isAvailable ? "red" : "blue"
+          m: 1, bgcolor: productAvailability[product._id] ? "red" : "blue",
         }}
       >
         <Typography
@@ -110,7 +127,7 @@ export default function AdminParent() {
         <DeleteForeverIcon onClick={() => removedProductData(product._id)} />
         <BackHandIcon
         sx={{ padding: "1rem" }}
-        onClick={() => toggleAvailablitity(product._id, isAvailable)}
+        onClick={() => toggleAvailability(product._id)}
       />
       </Box>
     </Paper>
