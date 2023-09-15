@@ -108,7 +108,7 @@ export default function PersonalInformation() {
                 required
                 id="adress"
                 name="adress"
-                label="adress"
+                label="Adress"
                 fullWidth
                 autoComplete="shipping adress"
                 variant="standard"
