@@ -84,7 +84,7 @@ export default function PersonalInformation() {
                 required
                 type="email"
                 id="email"
-                name="Email"
+                name="email"
                 label="E-mail"
                 fullWidth
                 autoComplete="email"
@@ -106,11 +106,11 @@ export default function PersonalInformation() {
               <TextField
                 onChange={handleChange}
                 required
-                id="address"
-                name="address"
-                label="Address"
+                id="adress"
+                name="adress"
+                label="adress"
                 fullWidth
-                autoComplete="shipping address"
+                autoComplete="shipping adress"
                 variant="standard"
               />
 
@@ -133,7 +133,7 @@ export default function PersonalInformation() {
                 name="city"
                 label="City"
                 fullWidth
-                autoComplete="shipping address-level2"
+                autoComplete="shipping adress-level2"
                 variant="standard"
               />
 
