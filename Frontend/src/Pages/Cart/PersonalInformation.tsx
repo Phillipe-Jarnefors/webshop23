@@ -1,57 +1,64 @@
 import { useNavigate } from "react-router-dom";
 import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import { Container } from "@mui/system";
 import { useState } from "react";
+import Breadcrumb from "./Breadcrumb";
 
 export default function PersonalInformation() {
   const navigate = useNavigate();
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [adress, setAdress] = useState("");
-  const [zip, setZip] = useState("");
-  const [city, setCity] = useState("");
-
   const goHome = () => {
-    console.log("klick på card!");
-    // navigerar till butiken när man klickar "Till butiken-knappen"
     navigate(`/`);
   };
+  const goBack = () => {
+    navigate(`/cart`);
+  };
+
+  const [userInput, setUserInput] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
+    adress: "",
+    zip: "",
+    city: "",
+  });
+
+  function handleChange(e: {
+    target: { name: string; value: string | number };
+  }) {
+    const { name, value } = e.target;
+    setUserInput((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const userInfo = {
-      firstName,
-      lastName,
-      email,
-      phoneNumber,
-      adress,
-      zip,
-      city,
-    };
-    localStorage.setItem("userInfo", JSON.stringify(userInfo));
-    console.log(userInfo);
+    localStorage.setItem("userInfo", JSON.stringify(userInput));
     navigate(`/shippingmethod`);
   };
 
   return (
     <>
       <Container>
-        <div>
-          <button onClick={goHome}>TILL BUTIKEN</button>
-        </div>
-        <Typography variant="h6" gutterBottom>
-          Shipping Information
-        </Typography>
         <Grid container spacing={3}>
-          <form onSubmit={handleSubmit}>
-            <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
+            <div>
+              <button onClick={goHome}>TILL BUTIKEN</button>
+            </div>
+          </Grid>
+
+          <Grid item xs={12} sm={8} md={6} mx={"auto"}>
+            <Breadcrumb activeStep={1} />
+            <form
+              onSubmit={handleSubmit}
+              style={{ display: "flex", flexFlow: "column", gap: "1rem" }}
+            >
               <TextField
-                onChange={(e) => setFirstName(e.target.value)}
+                onChange={handleChange}
                 required
                 id="firstName"
                 name="firstName"
@@ -60,10 +67,9 @@ export default function PersonalInformation() {
                 autoComplete="given-name"
                 variant="standard"
               />
-            </Grid>
-            <Grid item xs={12} sm={6}>
+
               <TextField
-                onChange={(e) => setLastName(e.target.value)}
+                onChange={handleChange}
                 required
                 id="lastName"
                 name="lastName"
@@ -72,10 +78,9 @@ export default function PersonalInformation() {
                 autoComplete="family-name"
                 variant="standard"
               />
-            </Grid>
-            <Grid item xs={12}>
+
               <TextField
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={handleChange}
                 required
                 type="email"
                 id="email"
@@ -85,12 +90,11 @@ export default function PersonalInformation() {
                 autoComplete="email"
                 variant="standard"
               />
-            </Grid>
-            <Grid item xs={12}>
+
               <TextField
-                onChange={(e) => setPhoneNumber(e.target.value)}
+                onChange={handleChange}
                 required
-                type="tel"
+                type="number"
                 id="phoneNumber"
                 name="phoneNumber"
                 label="Phone number"
@@ -98,10 +102,9 @@ export default function PersonalInformation() {
                 autoComplete="phone number"
                 variant="standard"
               />
-            </Grid>
-            <Grid item xs={12}>
+
               <TextField
-                onChange={(e) => setAdress(e.target.value)}
+                onChange={handleChange}
                 required
                 id="address"
                 name="address"
@@ -110,10 +113,9 @@ export default function PersonalInformation() {
                 autoComplete="shipping address"
                 variant="standard"
               />
-            </Grid>
-            <Grid item xs={12} sm={6}>
+
               <TextField
-                onChange={(e) => setZip(e.target.value)}
+                onChange={handleChange}
                 required
                 type="number"
                 id="zip"
@@ -123,10 +125,9 @@ export default function PersonalInformation() {
                 autoComplete="shipping postal-code"
                 variant="standard"
               />
-            </Grid>
-            <Grid item xs={12} sm={6}>
+
               <TextField
-                onChange={(e) => setCity(e.target.value)}
+                onChange={handleChange}
                 required
                 id="city"
                 name="city"
@@ -135,9 +136,13 @@ export default function PersonalInformation() {
                 autoComplete="shipping address-level2"
                 variant="standard"
               />
-            </Grid>
-            <button type="submit">GODKÄNN</button>
-          </form>
+
+              <Grid item xs={12} sm={6} mx="auto">
+                <button onClick={goBack}>Avbryt</button>
+                <button type="submit">GODKÄNN</button>
+              </Grid>
+            </form>
+          </Grid>
         </Grid>
       </Container>
     </>

@@ -1,7 +1,9 @@
-import React from 'react'
+import Breadcrumb from "./Breadcrumb";
 
 export default function Checkout() {
   return (
-    <div>Checkout</div>
-  )
+    <div>
+      <Breadcrumb activeStep={3} />
+    </div>
+  );
 }
