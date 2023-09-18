@@ -24,3 +24,7 @@ export interface CartContextValue{
 export interface Props {
   children: ReactNode;
 }
+
+export interface BreadcrumbsProps{
+  activeStep: 1|2|3;
+}
