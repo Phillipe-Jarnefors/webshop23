@@ -7,7 +7,16 @@ import Button from "@mui/material/Button";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Container } from "@mui/system";
 
+import { useContext } from "react";
+import CartBadge from "../Components/CartBadge";
+import { CartContext } from "../Utilities/CartContext";
+import AdminBadge from "./AdminBadge";
+
+
 export default function Header() {
+
+  const { cart } = useContext(CartContext);
+  
   return (
     <>
       <Container>
@@ -25,7 +34,8 @@ export default function Header() {
                 Marsvinsbutiken
               </Typography>
               <Link to="/admin">
-                <Button
+                <AdminBadge />
+                {/* <Button
                   variant="contained"
                   sx={{
                     color: "black",
@@ -35,10 +45,11 @@ export default function Header() {
                   }}
                 >
                   Admin
-                </Button>
+                </Button> */}
               </Link>
               <Link to="/cart">
-                <Button
+              <CartBadge cartLength={cart.reduce((total, product) => total + product.quantity, 0)} />
+                {/* <Button
                   variant="contained"
                   endIcon={<ShoppingCartIcon />}
                   sx={{
@@ -48,8 +59,8 @@ export default function Header() {
                     m: 1,
                   }}
                 >
-                  Cart
-                </Button>
+                  Cart: {cart.reduce((total, product) => total + product.quantity, 0)}
+                </Button> */}
               </Link>
             </Toolbar>
           </AppBar>

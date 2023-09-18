@@ -1,5 +1,5 @@
 import { CartContextValue, CartProduct, Props, Product } from "./Interfaces";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 export const CartContext = createContext<CartContextValue>({
   cart: [],
@@ -9,6 +9,12 @@ export const CartContext = createContext<CartContextValue>({
 
 export const CartProvider = ({ children }: Props) => {
   const [cart, setCart] = useState<CartProduct[]>([]);
+
+  // hämta kundvagnsdata från LocalStorage
+  useEffect(() => {
+    const savedCart = JSON.parse(localStorage.getItem("cart") || "[]");
+    setCart(savedCart);
+  }, []);
 
   const addToCart = (product: Product) => {
     const productInCart = cart.find(
@@ -23,16 +29,17 @@ export const CartProvider = ({ children }: Props) => {
         }
       });
       setCart(updatedCart);
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
     } else {
       const updatedCart = [...cart, { ...product, quantity: 1 }];
       setCart(updatedCart);
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
     }
   };
 
 
   const removeFromCart = (productId: string) => {
 
-    // hitta den första förekomsten av produkten med samma id
     const index = cart.findIndex((product) => product._id=== productId);
 
     if (index !== -1) {
@@ -46,6 +53,7 @@ export const CartProvider = ({ children }: Props) => {
             updateCart.splice(index, 1);
         }
         setCart(updateCart);
+        localStorage.setItem("cart", JSON.stringify(updateCart));
     }
 };
 

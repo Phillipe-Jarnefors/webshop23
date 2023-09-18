@@ -5,9 +5,10 @@ import { Avatar, Typography, Button, Container, Paper } from "@mui/material";
 import { Box } from "@mui/system";
 import { useLoaderData, Link, useNavigate } from "react-router-dom";
 import { Product } from "../../Utilities/Interfaces.ts";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import CartIcon from "@mui/icons-material/AddShoppingCart";
 import { CartContext } from "../../Utilities/CartContext.tsx";
+import SnackbarAddProduct from "./SnackbarAddProduct";
 
 export function loader(): Promise<Product[]> {
   return getProducts();
@@ -18,6 +19,13 @@ export default function AllProducts() {
   const products = useLoaderData() as Product[];
 
   const navigate = useNavigate();
+  
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  // const [snackbarMessage, setSnackbarMessage] = useState('');
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
 
   const handleCardClick = (product: Product) => {
     console.log("klick på card!");
@@ -63,7 +71,9 @@ export default function AllProducts() {
           // onClick={() => addToCart(product)}
           onClick={() => {
             addToCart(product);
-            alert("Produkten har lagts till i kundvagnen.");
+            // alert("Produkten har lagts till i kundvagnen.");
+            setSnackbarOpen(true);
+            // setSnackbarMessage(snackbarMessage); 
           }}
         >
           Lägg till
@@ -86,6 +96,13 @@ export default function AllProducts() {
       >
         {productsElements}
       </Box>
+      <SnackbarAddProduct
+              open={snackbarOpen}
+              onClose={handleSnackbarClose}
+              // message="Produkten har lagts i kundvagnen"
+              // message={setSnackbarMessage}
+              // action={action}
+        />
     </Container>
   );
 }
