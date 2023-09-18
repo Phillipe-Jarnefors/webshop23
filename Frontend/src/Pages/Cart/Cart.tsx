@@ -3,8 +3,8 @@ import { CartContext } from "../../Utilities/CartContext";
 import { useNavigate } from "react-router-dom";
 import { Product } from "../../Utilities/Interfaces.ts";
 import Button from "@mui/material/Button";
-import CartIcon from "@mui/icons-material/AddShoppingCart";
-import DeleteIcon from "@mui/icons-material/Delete";
+// import CartIcon from "@mui/icons-material/AddShoppingCart";
+// import DeleteIcon from "@mui/icons-material/Delete";
 import {
   Avatar,
   Container,
@@ -14,13 +14,16 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
+// import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
+// import RemoveOutlinedIcon from '@mui/icons-material/RemoveOutlined';
+import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
+import RemoveShoppingCartOutlinedIcon from '@mui/icons-material/RemoveShoppingCartOutlined';
+
 
 function Cart() {
-  const { addToCart } = useContext(CartContext);
-  const { removeFromCart } = useContext(CartContext);
+  const { addToCart, removeFromCart, cart  } = useContext(CartContext);
 
-  const { cart } = useContext(CartContext);
-  console.log(cart);
+
   const navigate = useNavigate();
 
   const goHome = () => {
@@ -43,6 +46,11 @@ function Cart() {
     removeFromCart(product._id);
   };
 
+  const handleCardClick = (product: Product) => {
+    console.log("klick på card!");
+    navigate(`/products/productdetail/${product._id}`);
+  };
+
   const cartElements = cart.map((product, index) => (
     <ListItem
       key={index}
@@ -59,28 +67,29 @@ function Cart() {
         alt={product.name}
         src={product.image}
         style={{ height: 100, width: 100 }}
+        onClick={() => handleCardClick(product)}
       />
       <ListItemText
         primary={`${product.name}`}
         secondary={`${product.quantity} st á ${product.price} kr`}
       />
-      <Button
+      <AddShoppingCartOutlinedIcon 
         variant="contained"
-        endIcon={<CartIcon />}
-        sx={{ marginBottom: "10px" }}
+        // endIcon={<AddOutlinedIcon  />}
+        sx={{ marginBottom: "10px", fontSize: "32px" }}
         onClick={() => addToCart(product)}
       >
-        Lägg till
-      </Button>
+        {/* Lägg till */}
+      </AddShoppingCartOutlinedIcon >
 
-      <Button
+      <RemoveShoppingCartOutlinedIcon
         variant="outlined"
-        endIcon={<DeleteIcon />}
-        sx={{ marginBottom: "10px" }}
+        // endIcon={<DeleteIcon />}
+        sx={{ marginBottom: "10px", fontSize: "32px" }}
         onClick={() => handleRemoveClick(product)}
       >
-        Ta bort
-      </Button>
+        {/* Ta bort */}
+      </RemoveShoppingCartOutlinedIcon>
     </ListItem>
   ));
 
@@ -112,8 +121,9 @@ function Cart() {
             <Paper
               elevation={2}
               sx={{
-                backgroundColor: "#DDA15E",
-                width: { sm: "100%", md: "65%" },
+                backgroundColor: "#eee7e1",
+                // backgroundColor: "#DDA15E",
+                width: { sm: "100%", md: "70%" },
               }}
             >
               <List>{cartElements}</List>
@@ -123,8 +133,17 @@ function Cart() {
               >
                 Total: {calculateTotalPrice()} kr
               </Typography>
-              <button onClick={goToPersInfo}>GÅ TILL KASSAN</button>
             </Paper>
+
+            <Button
+              variant="contained"
+              // endIcon={<CartIcon />}
+              sx={{ marginTop: "20px" }}
+              onClick={() => goToPersInfo()}
+            >
+              GÅ TILL KASSAN
+            </Button>
+            {/* <button onClick={goToPersInfo}>GÅ TILL KASSAN</button> */}
           </Container>
         )}
       </div>
