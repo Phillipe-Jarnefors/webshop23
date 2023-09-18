@@ -21,6 +21,9 @@ import AdminProducts, {
 } from "./Pages/Admin/AdminProducts";
 import AdminOrders, { loader as adminOrdersLoader } from "./Pages/Admin/AdminOrders";
 
+import PersonalInformation from "./Pages/Cart/PersonalInformation";
+import ShippingMethod from "./Pages/Cart/ShippingMethod";
+import Checkout from "./Pages/Cart/Checkout";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -33,7 +36,13 @@ const router = createBrowserRouter(
           <Route path="products" element={<AdminProducts />} loader={adminProductsLoader} />
         </Route>
       <Route path="/cart" element={<Cart />} />
-      <Route path="/products/productdetail/:productId" element={<ProductDetail />} />
+      <Route path="/userinfo" element={<PersonalInformation />} />
+        <Route path="/shippingmethod" element={<ShippingMethod />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route
+          path="/products/productdetail/:productId"
+          element={<ProductDetail />}
+        />
       </>
   )
 );
@@ -45,7 +54,7 @@ function App() {
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#013e87",
+      main: "#bc6c25",
     },
     secondary: {
       main: "#2e74c9",

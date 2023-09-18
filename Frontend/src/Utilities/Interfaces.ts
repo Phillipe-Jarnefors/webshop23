@@ -50,8 +50,13 @@ export interface CartProduct extends Product{
 export interface CartContextValue{
   cart: CartProduct[],
   addToCart: (product: Product) => void;
+  removeFromCart : (productId: string) => void;
 }
 
 export interface Props {
   children: ReactNode;
+}
+
+export interface BreadcrumbsProps{
+  activeStep: 1|2|3;
 }

@@ -5,9 +5,10 @@ import { Avatar, Typography, Button, Container, Paper } from "@mui/material";
 import { Box } from "@mui/system";
 import { useLoaderData, Link, useNavigate } from "react-router-dom";
 import { Product } from "../../Utilities/Interfaces.ts";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import CartIcon from "@mui/icons-material/AddShoppingCart";
-import { CartContext } from "../../Utilities/CartContext.tsx"
+import { CartContext } from "../../Utilities/CartContext.tsx";
+import SnackbarAddProduct from "./SnackbarAddProduct";
 
 export function loader(): Promise<Product[]> {
   return getProducts();
@@ -19,18 +20,23 @@ export default function AllProducts() {
 
   const navigate = useNavigate();
   
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  // const [snackbarMessage, setSnackbarMessage] = useState('');
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
+
   const handleCardClick = (product: Product) => {
     console.log("klick på card!");
-    
-    // navigera till sidan ProductDetail.tsx när man klickar på produkt
     navigate(`/products/productdetail/${product._id}`);
-}
+  };
 
   const productsElements = products.map((product) => (
     <Paper
       elevation={2}
       key={product._id}
-      sx={{ minWidth: 210, width: { md: 340 } }}
+      sx={{ mt: 4, minWidth: 210, width: { md: 340 } }}
     >
       <Box
         sx={{
@@ -42,7 +48,7 @@ export default function AllProducts() {
       >
         <Typography
           variant="h2"
-          sx={{ mx: 4, textAlign: "center", color: "primary.main", m: 2 }}
+          sx={{ mx: 4, textAlign: "center", color: "black", m: 2 }}
         >
           {product.name}
         </Typography>
@@ -61,7 +67,13 @@ export default function AllProducts() {
         <Button
           variant="contained"
           endIcon={<CartIcon />}
-          onClick={() => addToCart(product)}
+          sx={{ marginBottom: "10px" }}
+          onClick={() => {
+            addToCart(product);
+            // alert("Produkten har lagts till i kundvagnen.");
+            setSnackbarOpen(true);
+            // setSnackbarMessage(snackbarMessage); 
+          }}
         >
           Lägg till
         </Button>
@@ -74,6 +86,8 @@ export default function AllProducts() {
       <Box
         sx={{
           display: "flex",
+          flex: "1",
+          flexWrap: "wrap",
           flexDirection: { xs: "column", md: "row" },
           justifyContent: "space-around",
           gap: 4,
@@ -81,6 +95,13 @@ export default function AllProducts() {
       >
         {productsElements}
       </Box>
+      <SnackbarAddProduct
+              open={snackbarOpen}
+              onClose={handleSnackbarClose}
+              // message="Produkten har lagts i kundvagnen"
+              // message={setSnackbarMessage}
+              // action={action}
+        />
     </Container>
   );
 }
