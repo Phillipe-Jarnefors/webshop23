@@ -16,13 +16,11 @@ import {
 } from "@mui/material";
 // import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 // import RemoveOutlinedIcon from '@mui/icons-material/RemoveOutlined';
-import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
-import RemoveShoppingCartOutlinedIcon from '@mui/icons-material/RemoveShoppingCartOutlined';
-
+import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutlined";
+import RemoveShoppingCartOutlinedIcon from "@mui/icons-material/RemoveShoppingCartOutlined";
 
 function Cart() {
-  const { addToCart, removeFromCart, cart  } = useContext(CartContext);
-
+  const { addToCart, removeFromCart, cart } = useContext(CartContext);
 
   const navigate = useNavigate();
 
@@ -73,18 +71,14 @@ function Cart() {
         primary={`${product.name}`}
         secondary={`${product.quantity} st á ${product.price} kr`}
       />
-      <AddShoppingCartOutlinedIcon 
-        variant="contained"
-        // endIcon={<AddOutlinedIcon  />}
+      <AddShoppingCartOutlinedIcon
         sx={{ marginBottom: "10px", fontSize: "32px" }}
         onClick={() => addToCart(product)}
       >
         {/* Lägg till */}
-      </AddShoppingCartOutlinedIcon >
+      </AddShoppingCartOutlinedIcon>
 
       <RemoveShoppingCartOutlinedIcon
-        variant="outlined"
-        // endIcon={<DeleteIcon />}
         sx={{ marginBottom: "10px", fontSize: "32px" }}
         onClick={() => handleRemoveClick(product)}
       >
