@@ -4,6 +4,7 @@ import TextField from "@mui/material/TextField";
 import { Container } from "@mui/system";
 import { useState } from "react";
 import Breadcrumb from "./Breadcrumb";
+import Button from "@mui/material/Button";
 
 export default function PersonalInformation() {
   const navigate = useNavigate();
@@ -136,10 +137,25 @@ export default function PersonalInformation() {
                 autoComplete="shipping adress-level2"
                 variant="standard"
               />
-
-              <Grid item xs={12} sm={6} mx="auto">
-                <button onClick={goBack}>Avbryt</button>
-                <button type="submit">GODKÄNN</button>
+              <Grid container spacing={2} justifyContent="center">
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    sx={{ marginTop: "20px" }}
+                    onClick={goBack}
+                  >
+                    Avbryt
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    sx={{ marginTop: "20px" }}
+                    type="submit"
+                  >
+                    GODKÄNN
+                  </Button>
+                </Grid>
               </Grid>
             </form>
           </Grid>
