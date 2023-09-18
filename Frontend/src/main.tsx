@@ -9,34 +9,32 @@ import {
 import "./index.css";
 import Layout from "./Components/Layout";
 import AllProducts, {
-  loader as allProductsLoader,
+  loader as allProductsLoader
 } from "./Pages/Products/AllProducts";
 import { ThemeProvider, createTheme } from "@mui/material";
 import ProductDetail from "./Pages/Products/ProductDetail";
-
-import AdminParent, {
-  loader as adminProductsLoader,
-} from "./Pages/Admin/AdminParent";
+import AdminParent from "./Pages/Admin/AdminParent";
 import Cart from "./Pages/Cart/Cart";
 import { CartProvider } from "./Utilities/CartContext";
+import AdminProducts, {
+  loader as adminProductsLoader,
+} from "./Pages/Admin/AdminProducts";
+import AdminOrders, { loader as adminOrdersLoader } from "./Pages/Admin/AdminOrders";
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <>
+      <>
       <Route path="/" element={<Layout />}>
-        <Route index element={<AllProducts />} loader={allProductsLoader} />
+      <Route index element={<AllProducts />} loader={allProductsLoader} />
       </Route>
-      <Route
-        path="/admin"
-        element={<AdminParent />}
-        loader={adminProductsLoader}
-      />
+        <Route path="/admin" element={<AdminParent />}>
+          <Route path="orders" element={<AdminOrders />} loader={adminOrdersLoader} />
+          <Route path="products" element={<AdminProducts />} loader={adminProductsLoader} />
+        </Route>
       <Route path="/cart" element={<Cart />} />
-      <Route
-        path="/products/productdetail/:productId"
-        element={<ProductDetail />}
-      />
-    </>
+      <Route path="/products/productdetail/:productId" element={<ProductDetail />} />
+      </>
   )
 );
 

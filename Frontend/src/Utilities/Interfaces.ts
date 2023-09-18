@@ -23,6 +23,26 @@ export interface AddProduct {
   isAvailable: boolean;
 }
 
+export interface Orders {
+  _id: string;
+  name: string,
+  orderNumber: string,
+  paymentMethod: string,
+  email: string,
+  phone: number,
+  adress: string,
+  cart: [
+    {
+      productId: string,
+      quantity: number
+    }
+  ],
+  isSent: boolean,
+  delivery: string,
+  isDeleted: boolean,
+}
+
+
 export interface CartProduct extends Product{
   quantity: number;
 }

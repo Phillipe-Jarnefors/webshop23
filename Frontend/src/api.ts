@@ -13,6 +13,19 @@ export async function getProducts() {
   return data;
 }
 
+
+export async function getOrders() {
+  const res = await fetch("http://localhost:3000/orders");
+
+  if (!res.ok) {
+    throw {
+      message: "Failed loading orders",
+    };
+  }
+  const data = await res.json();
+  return data;
+}
+
 export async function removeProduct(id: string) {
   const settings = {
     method: "PUT",
@@ -37,6 +50,7 @@ export async function removeProduct(id: string) {
     console.error(error);
   }
 }
+
 
 export async function getProductById(productId: string) {
   try {
@@ -73,8 +87,8 @@ export async function updateAvailability(
       settings
     );
     const data = await res.json();
-      console.log(data.message);
-      
+    console.log(data.message);
+
     return data;
   } catch (error) {
     console.error(error);
@@ -85,24 +99,78 @@ export async function addNewProduct(product: AddProduct) {
   const settings = {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      "name": product.productName,
-      "image": product.image,
-      "shortDesc": product.shortDesc,
-      "description":  product.description,
-      "price":  product.price,
-      "quantity":  product.quantity,
-      "isAvailable":  product.isAvailable,
-      "isDeleted": false
-    })
-  }
+      name: product.productName,
+      image: product.image,
+      shortDesc: product.shortDesc,
+      description: product.description,
+      price: product.price,
+      quantity: product.quantity,
+      isAvailable: product.isAvailable,
+      isDeleted: false,
+    }),
+  };
   try {
-    const res = await fetch('http://localhost:3000/products/add', settings)
-    const data = await res.json()
-    return data
-  } catch(error) {
-    console.error(error)
+    const res = await fetch("http://localhost:3000/products/add", settings);
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+
+export async function updateOrders(
+  orderId: string,
+  sent: boolean
+) {
+  const settings = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      isSent : sent
+    }),
+  };
+  try {
+    const res = await fetch(
+      `http://localhost:3000/orders/update/${orderId}`,
+      settings
+    );
+    const data = await res.json();
+    console.log(data.message);
+
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function deleteOrder(
+  orderId: string,
+) {
+  const settings = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      isDeleted : true
+    }),
+  };
+  try {
+    const res = await fetch(
+      `http://localhost:3000/orders/delete/${orderId}`,
+      settings
+    );
+    const data = await res.json();
+    console.log(data.message);
+
+    return data;
+  } catch (error) {
+    console.error(error);
   }
 }
