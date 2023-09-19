@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
+import { CardPaymentFormProps} from '../../Utilities/Interfaces';
 
-export default function CardPaymentForm({ onSubmit }) {
+export default function CardPaymentForm({ onSubmitCard }: CardPaymentFormProps) {
     const [cardInfo, setCardInfo] = useState({
         cardNumber: "",
         cardDate: "",
@@ -17,7 +18,7 @@ export default function CardPaymentForm({ onSubmit }) {
         }));
     };
 
-    const handleAmontChange = (e) => {
+    const handleAmontChange = (e: { target: { value: string; }; }) => {
         const { value } = e.target;
         setAmount(value);
     }
@@ -26,7 +27,7 @@ export default function CardPaymentForm({ onSubmit }) {
         e.preventDefault();
 
         if(cardInfo.cardNumber && cardInfo.cardDate && cardInfo.cvv && amount) {
-        onSubmit({...cardInfo, amount});
+        onSubmitCard(cardInfo, amount);
         } else {
             alert("Fyll i alla fält!");
             console.log("Fyll i alla fält!");   

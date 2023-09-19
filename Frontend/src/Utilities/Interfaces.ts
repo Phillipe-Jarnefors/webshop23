@@ -11,6 +11,22 @@ export interface Product {
   isAvailable: boolean;
 }
 
+export interface SwishPaymentFormProps {
+  onSubmitSwish: (swishInfo: { phoneNumber: string; amount: string }) => void;
+}
+
+export interface CardPaymentFormProps {
+  onSubmitCard: (
+    cardInfo: {
+      cardNumber: string;
+      cardDate: string;
+      cvv: string;
+    },
+    amount: string
+  ) => void;
+}
+
+
 export interface CartProduct extends Product{
   quantity: number;
 }
@@ -27,17 +43,4 @@ export interface Props {
 
 export interface BreadcrumbsProps{
   activeStep: 1|2|3;
-}
-
-export interface OrderData {
-  name: string;
-  orderNumber: number;
-  paymentMethod: string;
-  email: string;
-  phone: number;
-  adress: string;
-  cart: CartProduct[];
-  isSent: boolean;
-  delivery: string;
-  isDeleted?: boolean;
 }
