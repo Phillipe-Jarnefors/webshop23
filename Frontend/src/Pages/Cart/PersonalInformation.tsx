@@ -39,6 +39,7 @@ export default function PersonalInformation() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     localStorage.setItem("userInfo", JSON.stringify(userInput));
+    localStorage.setItem("phoneNumber", userInput.phoneNumber);
     navigate(`/shippingmethod`);
   };
 

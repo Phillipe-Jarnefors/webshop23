@@ -9,7 +9,7 @@ import {
 import "./index.css";
 import Layout from "./Components/Layout";
 import AllProducts, {
-  loader as allProductsLoader
+  loader as allProductsLoader,
 } from "./Pages/Products/AllProducts";
 import { ThemeProvider, createTheme } from "@mui/material";
 import ProductDetail from "./Pages/Products/ProductDetail";
@@ -19,31 +19,44 @@ import { CartProvider } from "./Utilities/CartContext";
 import AdminProducts, {
   loader as adminProductsLoader,
 } from "./Pages/Admin/AdminProducts";
-import AdminOrders, { loader as adminOrdersLoader } from "./Pages/Admin/AdminOrders";
+import AdminOrders, {
+  loader as adminOrdersLoader,
+} from "./Pages/Admin/AdminOrders";
 
 import PersonalInformation from "./Pages/Cart/PersonalInformation";
 import ShippingMethod from "./Pages/Cart/ShippingMethod";
 import Checkout from "./Pages/Cart/Checkout";
+import SubmittedOrder from "./Pages/Cart/SubmittedOrder";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-      <>
+    <>
       <Route path="/" element={<Layout />}>
-      <Route index element={<AllProducts />} loader={allProductsLoader} />
-      </Route>
+        <Route index element={<AllProducts />} loader={allProductsLoader} />
+
         <Route path="/admin" element={<AdminParent />}>
-          <Route path="orders" element={<AdminOrders />} loader={adminOrdersLoader} />
-          <Route path="products" element={<AdminProducts />} loader={adminProductsLoader} />
+          <Route
+            path="orders"
+            element={<AdminOrders />}
+            loader={adminOrdersLoader}
+          />
+          <Route
+            path="products"
+            element={<AdminProducts />}
+            loader={adminProductsLoader}
+          />
         </Route>
-      <Route path="/cart" element={<Cart />} />
-      <Route path="/userinfo" element={<PersonalInformation />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/userinfo" element={<PersonalInformation />} />
         <Route path="/shippingmethod" element={<ShippingMethod />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/submittedOrder" element={<SubmittedOrder />} />
         <Route
           path="/products/productdetail/:productId"
           element={<ProductDetail />}
         />
-      </>
+      </Route>
+    </>
   )
 );
 

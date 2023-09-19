@@ -12,6 +12,7 @@ export interface Product {
   isAvailable: boolean;
 }
 
+
 export interface EditedProduct {
   name: string;
   image: string;
@@ -49,6 +50,22 @@ export interface Orders {
   isSent: boolean,
   delivery: string,
   isDeleted: boolean,
+}
+
+export interface SwishPaymentFormProps {
+  onSubmitSwish: (swishInfo: { phoneNumber: string; amount: string }) => void;
+}
+
+export interface CardPaymentFormProps {
+  onSubmitCard: (
+    cardInfo: {
+      cardNumber: string;
+      cardDate: string;
+      cvv: string;
+    },
+    amount: string
+  ) => void;
+
 }
 
 
