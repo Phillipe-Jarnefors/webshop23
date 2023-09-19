@@ -1,4 +1,4 @@
-import { AddProduct, EditedProduct, Product } from "./Utilities/Interfaces";
+import { AddProduct, EditedProduct} from "./Utilities/Interfaces";
 
 export async function getProducts() {
   const res = await fetch("http://localhost:3000/products");

@@ -86,3 +86,9 @@ export interface Props {
 export interface BreadcrumbsProps{
   activeStep: 1|2|3;
 }
+
+
+export interface SnackbarProps{
+  open: boolean,
+  onClose: ()=>void
+}
