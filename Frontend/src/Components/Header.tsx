@@ -3,20 +3,15 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Container } from "@mui/system";
-
 import { useContext } from "react";
 import CartBadge from "../Components/CartBadge";
 import { CartContext } from "../Utilities/CartContext";
 import AdminBadge from "./AdminBadge";
 
-
 export default function Header() {
-
   const { cart } = useContext(CartContext);
-  
+
   return (
     <>
       <Container>
@@ -35,32 +30,14 @@ export default function Header() {
               </Typography>
               <Link to="/admin">
                 <AdminBadge />
-                {/* <Button
-                  variant="contained"
-                  sx={{
-                    color: "black",
-                    fontWeight: "700",
-                    background: "#dda15e",
-                    m: 1,
-                  }}
-                >
-                  Admin
-                </Button> */}
               </Link>
               <Link to="/cart">
-              <CartBadge cartLength={cart.reduce((total, product) => total + product.quantity, 0)} />
-                {/* <Button
-                  variant="contained"
-                  endIcon={<ShoppingCartIcon />}
-                  sx={{
-                    color: "black",
-                    fontWeight: "700",
-                    background: "#dda15e",
-                    m: 1,
-                  }}
-                >
-                  Cart: {cart.reduce((total, product) => total + product.quantity, 0)}
-                </Button> */}
+                <CartBadge
+                  cartLength={cart.reduce(
+                    (total, product) => total + product.quantity,
+                    0
+                  )}
+                />
               </Link>
             </Toolbar>
           </AppBar>

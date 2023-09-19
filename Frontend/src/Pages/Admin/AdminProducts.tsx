@@ -1,36 +1,44 @@
-import { addNewProduct, getProducts, removeProduct, updateAvailability, updateProduct } from "../../api";
-import { AddProduct, EditedProduct, Product } from "../../Utilities/Interfaces.ts";
+import {
+  addNewProduct,
+  getProducts,
+  removeProduct,
+  updateAvailability,
+  updateProduct,
+} from "../../api";
+import {
+  AddProduct,
+  EditedProduct,
+  Product,
+} from "../../Utilities/Interfaces.ts";
 import { useLoaderData } from "react-router";
 import { Paper, Box, Typography, Avatar } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
 import BackHandIcon from "@mui/icons-material/BackHand";
-import TextField from '@mui/material/TextField';
+import TextField from "@mui/material/TextField";
 import { useState } from "react";
-import Switch from '@mui/material/Switch';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-
-
+import Switch from "@mui/material/Switch";
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
 
 export async function loader(): Promise<Product[]> {
   return await getProducts();
 }
 
-const label = { inputProps: { 'aria-label': 'Switch demo',  } };
+const label = { inputProps: { "aria-label": "Switch demo" } };
 
 export default function AdminProducts() {
   const products = useLoaderData() as Product[];
-
 
   const initialProductAvailability = products.reduce((acc, product) => {
     return { ...acc, [product._id]: product.isAvailable };
   }, {});
 
-
-  const [productAvailability, setProductAvailability] = useState<{ [key: string]: boolean }>(initialProductAvailability);
-  const [data, setData] = useState<Product[]>(products)
+  const [productAvailability, setProductAvailability] = useState<{
+    [key: string]: boolean;
+  }>(initialProductAvailability);
+  const [data, setData] = useState<Product[]>(products);
   const [showEditForm, setShowEditForm] = useState<string>("");
   const [editedProduct, setEditedProduct] = useState<EditedProduct>({
     name: "",
@@ -41,16 +49,15 @@ export default function AdminProducts() {
     quantity: 0,
   });
   const [formProduct, setFormProduct] = useState<AddProduct>({
-      productName: "",
-      image: "",
-      shortDesc: "",
-      description: "",
-      price: 0,
-      quantity: 0,
-      isAvailable: true,
-      isDeleted: false,
-  })
-
+    productName: "",
+    image: "",
+    shortDesc: "",
+    description: "",
+    price: 0,
+    quantity: 0,
+    isAvailable: true,
+    isDeleted: false,
+  });
 
   function handleChange(e: React.FormEvent) {
     const { name, value, type, checked } = e.target as HTMLInputElement;
@@ -84,20 +91,22 @@ export default function AdminProducts() {
     }
   };
 
-
   // Edit Product Listener
   function handleEdit(e: React.FormEvent) {
     const { name, value } = e.target as HTMLInputElement;
-  
+
     setEditedProduct((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   }
-   
+
   // Save The Edited Product
-   const handleSaveClick = async (_e: React.FormEvent<HTMLFormElement>, id : string) => {
-    await updateProduct(editedProduct, id );
+  const handleSaveClick = async (
+    _e: React.FormEvent<HTMLFormElement>,
+    id: string
+  ) => {
+    await updateProduct(editedProduct, id);
     setShowEditForm("");
   };
 
@@ -132,9 +141,9 @@ export default function AdminProducts() {
       setProductAvailability((prevState) => ({
         ...prevState,
         [newProduct._id]: newProduct.isAvailable,
-      }));;
+      }));
     }
-  }
+  };
 
   // Soft Delete Product
   const removedProductData = async (id: string) => {
@@ -155,7 +164,6 @@ export default function AdminProducts() {
       await updateAvailability(id, newAvailability);
     } catch (error) {
       console.error("Error when updating availability: ", error);
-      
     }
   };
 
@@ -167,22 +175,28 @@ export default function AdminProducts() {
     <Paper
       elevation={2}
       key={product._id}
-      sx={{ minWidth: 210, width: { md: 340 },}}
+      sx={{ minWidth: 210, width: { md: 340 } }}
     >
-   
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
-          alignItems: "center", 
+          alignItems: "center",
           m: 1,
-          bgcolor: productAvailability[product._id] ? "beige" : "gray"
+          bgcolor: productAvailability[product._id] ? "beige" : "gray",
         }}
       >
         <Typography
           variant="h2"
-          sx={{ mx: 4, textAlign: "center", color: "Black", m: 2, 
-          textDecoration: productAvailability[product._id] ? "none" : "line-through"}}
+          sx={{
+            mx: 4,
+            textAlign: "center",
+            color: "Black",
+            m: 2,
+            textDecoration: productAvailability[product._id]
+              ? "none"
+              : "line-through",
+          }}
         >
           {product.name}
           <br />
@@ -192,7 +206,7 @@ export default function AdminProducts() {
           variant={"rounded"}
           alt={product.name}
           src={product.image}
-          style={{ width: 200, height: 200,}}
+          style={{ width: 200, height: 200 }}
         />
         <Typography sx={{ mt: 2 }}>{product.shortDesc}</Typography>
         <Typography>
@@ -202,51 +216,144 @@ export default function AdminProducts() {
         <Link to="/products/productdetail"></Link>
         <EditIcon onClick={() => handleEditClick(product)} />
         {showEditForm === product._id && (
-              <div>
-                <form onSubmit={(e) => handleSaveClick(e, product._id)}>
-                  <TextField onChange={handleEdit} label="Name" name="name" type="text"/>
-                  <TextField onChange={handleEdit} label="URL" name="image" type="text"/>
-                  <textarea  onChange={handleEdit} name="shortDesc" placeholder="Short Description" />
-                  <textarea  onChange={handleEdit} name="description"  placeholder="Description" />
-                  <TextField onChange={handleEdit} label="price" name="price" type="number"/>
-                  <TextField onChange={handleEdit} label="QT" name="quantity" type="number"/>
-                  <Button type="submit" variant="contained" color="success" disabled={!isFormValid()}>Save</Button>
-                </form>
-              </div>
-            )}
+          <div>
+            <form onSubmit={(e) => handleSaveClick(e, product._id)}>
+              <TextField
+                onChange={handleEdit}
+                label="Name"
+                name="name"
+                type="text"
+              />
+              <TextField
+                onChange={handleEdit}
+                label="URL"
+                name="image"
+                type="text"
+              />
+              <textarea
+                onChange={handleEdit}
+                name="shortDesc"
+                placeholder="Short Description"
+              />
+              <textarea
+                onChange={handleEdit}
+                name="description"
+                placeholder="Description"
+              />
+              <TextField
+                onChange={handleEdit}
+                label="price"
+                name="price"
+                type="number"
+              />
+              <TextField
+                onChange={handleEdit}
+                label="QT"
+                name="quantity"
+                type="number"
+              />
+              <Button
+                type="submit"
+                variant="contained"
+                color="success"
+                disabled={!isFormValid()}
+              >
+                Save
+              </Button>
+            </form>
+          </div>
+        )}
         <DeleteForeverIcon onClick={() => removedProductData(product._id)} />
         <BackHandIcon
-        sx={{ padding: "1rem" }}
-        onClick={() => toggleAvailability(product._id)}
-      />
+          sx={{ padding: "1rem" }}
+          onClick={() => toggleAvailability(product._id)}
+        />
       </Box>
     </Paper>
   ));
 
   return (
     <div>
-      <div >
-      <form style={{display: "flex", alignItems: "center", justifyContent: "center"}} onSubmit={sendNewProduct}>
-        <fieldset style={{display: "flex", flexDirection: "column"}}>
-          <legend>Create new product</legend>
-          <TextField sx={{ mt: 2 }} onChange={handleChange} id="outlined-basic" name="productName" type="text" label="Name" variant="outlined"required/>
-          <TextField sx={{ mt: 2 }} onChange={handleChange} id="outlined-basic" name="image" type="text" label="Image URL" variant="outlined"/>
-          <TextField sx={{ mt: 2 }} onChange={handleChange} id="outlined-basic" name="price" type="number" label="Price" variant="outlined"/>
-          <TextField sx={{ mt: 2 }} onChange={handleChange} id="outlined-basic" name="quantity" type="number" label="Quantity st" variant="outlined"/>
-          <textarea style={{ marginTop : "10px" }} onChange={handleChange} name="shortDesc" placeholder="Short Description" />
-          <textarea style={{ marginTop : "10px", marginBottom: "10px"}} onChange={handleChange} name="description"  placeholder="Description" />
-          <label htmlFor="isAvailable">Available</label>
-          <Switch {...label} type="checkbox" name="isAvailable" />
-          <Stack direction="row" spacing={2}>
-            <Button type="submit" variant="contained" color="success">
-              Create Product
-            </Button>
-          </Stack>
-        </fieldset>
-      </form>
+      <div>
+        <form
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          onSubmit={sendNewProduct}
+        >
+          <fieldset style={{ display: "flex", flexDirection: "column" }}>
+            <legend>Create new product</legend>
+            <TextField
+              sx={{ mt: 2 }}
+              onChange={handleChange}
+              id="outlined-basic"
+              name="productName"
+              type="text"
+              label="Name"
+              variant="outlined"
+              required
+            />
+            <TextField
+              sx={{ mt: 2 }}
+              onChange={handleChange}
+              id="outlined-basic"
+              name="image"
+              type="text"
+              label="Image URL"
+              variant="outlined"
+            />
+            <TextField
+              sx={{ mt: 2 }}
+              onChange={handleChange}
+              id="outlined-basic"
+              name="price"
+              type="number"
+              label="Price"
+              variant="outlined"
+            />
+            <TextField
+              sx={{ mt: 2 }}
+              onChange={handleChange}
+              id="outlined-basic"
+              name="quantity"
+              type="number"
+              label="Quantity st"
+              variant="outlined"
+            />
+            <textarea
+              style={{ marginTop: "10px" }}
+              onChange={handleChange}
+              name="shortDesc"
+              placeholder="Short Description"
+            />
+            <textarea
+              style={{ marginTop: "10px", marginBottom: "10px" }}
+              onChange={handleChange}
+              name="description"
+              placeholder="Description"
+            />
+            <label htmlFor="isAvailable">Available</label>
+            <Switch {...label} type="checkbox" name="isAvailable" />
+            <Stack direction="row" spacing={2}>
+              <Button type="submit" variant="contained" color="success">
+                Create Product
+              </Button>
+            </Stack>
+          </fieldset>
+        </form>
       </div>
-      <div style={{display: "flex", flexDirection: "row", flexWrap: "wrap", margin: "15px"}}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          flexWrap: "wrap",
+          margin: "15px",
+        }}
+      >
         {productElements}
       </div>
-    </div>);
+    </div>
+  );
 }
