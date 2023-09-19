@@ -49,3 +49,23 @@ export async function getProductById(productId: string) {
   }
 }
 
+export async function addOrder(orderData: string) {
+  const  settings = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(orderData),
+  };
+  try {
+    const res = await fetch("http://localhost:3000/orders/add", settings);
+    if (!res.ok) {
+      throw new Error("Failed to add order");
+    }
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("An error occurred while adding the order:", error);
+    throw error;
+  }
+}

@@ -22,6 +22,9 @@ import { CartProvider } from "./Utilities/CartContext";
 import PersonalInformation from "./Pages/Cart/PersonalInformation";
 import ShippingMethod from "./Pages/Cart/ShippingMethod";
 import Checkout from "./Pages/Cart/Checkout";
+import CardPaymentForm from "./Pages/Cart/CardPaymentForm";
+import SwishPaymentForm from "./Pages/Cart/SwishPaymentForm";
+import SubmittedOrder from "./Pages/Cart/SubmittedOrder";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -37,6 +40,9 @@ const router = createBrowserRouter(
         <Route path="/userinfo" element={<PersonalInformation />} />
         <Route path="/shippingmethod" element={<ShippingMethod />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/checkout/card" element={<CardPaymentForm/>} />
+        <Route path="/checkout/swish" element={<SwishPaymentForm/>} />
+        <Route path="/submittedOrder" element={<SubmittedOrder />} />
         <Route
           path="/products/productdetail/:productId"
           element={<ProductDetail />}
