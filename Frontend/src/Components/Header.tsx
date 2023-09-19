@@ -8,10 +8,11 @@ import { useContext } from "react";
 import CartBadge from "../Components/CartBadge";
 import { CartContext } from "../Utilities/CartContext";
 import AdminBadge from "./AdminBadge";
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
   const { cart } = useContext(CartContext);
-
+  const navigate = useNavigate();
   return (
     <>
       <Container>
@@ -25,6 +26,7 @@ export default function Header() {
                 variant="h2"
                 component="div"
                 sx={{ flexGrow: 1, color: "black" }}
+                onClick={() => navigate(`/`)}
               >
                 Marsvinsbutiken
               </Typography>
