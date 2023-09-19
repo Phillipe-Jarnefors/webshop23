@@ -28,3 +28,16 @@ export interface Props {
 export interface BreadcrumbsProps{
   activeStep: 1|2|3;
 }
+
+export interface OrderData {
+  name: string;
+  orderNumber: number;
+  paymentMethod: string;
+  email: string;
+  phone: number;
+  adress: string;
+  cart: CartProduct[];
+  isSent: boolean;
+  delivery: string;
+  isDeleted?: boolean;
+}

@@ -31,6 +31,9 @@ function Cart() {
   const goToPersInfo = () => {
     console.log("klick på card!");
     navigate(`/userinfo`);
+
+    const totalPrice = calculateTotalPrice();
+    localStorage.setItem("totalPrice", totalPrice.toString());
   };
 
   const calculateTotalPrice = () => {
