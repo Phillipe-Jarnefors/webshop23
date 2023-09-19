@@ -84,7 +84,6 @@ export default function AdminOrders() {
         </Stack>
       </Box>
     </Paper>
-  
   ));
 
   return (

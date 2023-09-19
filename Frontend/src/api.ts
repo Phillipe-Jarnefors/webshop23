@@ -1,4 +1,4 @@
-import { AddProduct, Product } from "./Utilities/Interfaces";
+import { AddProduct, EditedProduct, Product } from "./Utilities/Interfaces";
 
 export async function getProducts() {
   const res = await fetch("http://localhost:3000/products");
@@ -67,6 +67,40 @@ export async function getProductById(productId: string) {
     throw error;
   }
 }
+
+export async function updateProduct(
+  productUpdate: EditedProduct,
+  productId: string
+) {
+  const settings = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name: productUpdate.name,
+      image: productUpdate.image,
+      shortDesc: productUpdate.shortDesc,
+      description: productUpdate.description,
+      price: productUpdate.price,
+      quantity: productUpdate.quantity,
+    }),
+  };
+  try {
+    const res = await fetch(
+      `http://localhost:3000/products/update/${productId}`,
+      settings
+    );
+    const data = await res.json();
+    console.log(data.message);
+
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+
 
 export async function updateAvailability(
   productId: string,

@@ -1,5 +1,5 @@
-import { addNewProduct, getProducts, removeProduct, updateAvailability } from "../../api";
-import { AddProduct, Product } from "../../Utilities/Interfaces.ts";
+import { addNewProduct, getProducts, removeProduct, updateAvailability, updateProduct } from "../../api";
+import { AddProduct, EditedProduct, Product } from "../../Utilities/Interfaces.ts";
 import { useLoaderData } from "react-router";
 import { Paper, Box, Typography, Avatar } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -7,7 +7,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
 import BackHandIcon from "@mui/icons-material/BackHand";
 import TextField from '@mui/material/TextField';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Switch from '@mui/material/Switch';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -23,8 +23,23 @@ const label = { inputProps: { 'aria-label': 'Switch demo',  } };
 export default function AdminProducts() {
   const products = useLoaderData() as Product[];
 
-  const [productAvailability, setProductAvailability] = useState<{ [key: string]: boolean }>({});
+
+  const initialProductAvailability = products.reduce((acc, product) => {
+    return { ...acc, [product._id]: product.isAvailable };
+  }, {});
+
+
+  const [productAvailability, setProductAvailability] = useState<{ [key: string]: boolean }>(initialProductAvailability);
   const [data, setData] = useState<Product[]>(products)
+  const [showEditForm, setShowEditForm] = useState<string>("");
+  const [editedProduct, setEditedProduct] = useState<EditedProduct>({
+    name: "",
+    image: "",
+    shortDesc: "",
+    description: "",
+    price: 0,
+    quantity: 0,
+  });
   const [formProduct, setFormProduct] = useState<AddProduct>({
       productName: "",
       image: "",
@@ -32,20 +47,10 @@ export default function AdminProducts() {
       description: "",
       price: 0,
       quantity: 0,
+      isAvailable: true,
       isDeleted: false,
-      isAvailable: true
   })
 
-
-  useEffect(() => {
-
-    const initialProductAvailability = products.reduce((acc, product) => {
-      return { ...acc, [product._id]: product.isAvailable };
-    }, {});
-    setProductAvailability(initialProductAvailability);
-  }, [products]);
-
- console.log(productAvailability)
 
   function handleChange(e: React.FormEvent) {
     const { name, value, type, checked } = e.target as HTMLInputElement;
@@ -62,20 +67,82 @@ export default function AdminProducts() {
     }
   }
 
+  // Edit button
+  const handleEditClick = (product: Product) => {
+    if (showEditForm === product._id) {
+      setShowEditForm("");
+      setEditedProduct({
+        name: "",
+        image: "",
+        shortDesc: "",
+        description: "",
+        price: 0,
+        quantity: 0,
+      });
+    } else {
+      setShowEditForm(product._id);
+    }
+  };
+
+
+  // Edit Product Listener
+  function handleEdit(e: React.FormEvent) {
+    const { name, value } = e.target as HTMLInputElement;
+  
+    setEditedProduct((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  }
+   
+  // Save The Edited Product
+   const handleSaveClick = async (_e: React.FormEvent<HTMLFormElement>, id : string) => {
+    await updateProduct(editedProduct, id );
+    setShowEditForm("");
+  };
+
+  //Check Input Validation
+  const isFormValid = () => {
+    return (
+      editedProduct.name.trim() !== "" &&
+      editedProduct.image.trim() !== "" &&
+      editedProduct.shortDesc.trim() !== "" &&
+      editedProduct.description.trim() !== "" &&
+      editedProduct.price > 0 &&
+      editedProduct.quantity > 0
+    );
+  };
+
+  // Send New Created Product
   const sendNewProduct = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newProduct = await addNewProduct(formProduct);
     if (newProduct) {
-      setData((prevData) => [newProduct, ...prevData]);
+      setFormProduct({
+        productName: "",
+        image: "",
+        shortDesc: "",
+        description: "",
+        price: 0,
+        quantity: 0,
+        isAvailable: true,
+        isDeleted: false,
+      });
+      setData((prevData) => [...prevData, newProduct]);
+      setProductAvailability((prevState) => ({
+        ...prevState,
+        [newProduct._id]: newProduct.isAvailable,
+      }));;
     }
   }
 
+  // Soft Delete Product
   const removedProductData = async (id: string) => {
     console.log(removedProductData);
     return await removeProduct(id);
   };
 
-  
+  //Toggle if the Product is available or not
   const toggleAvailability = async (id: string) => {
     try {
       const newAvailability = !productAvailability[id];
@@ -109,17 +176,17 @@ export default function AdminProducts() {
           flexDirection: "column",
           alignItems: "center", 
           m: 1,
-          bgcolor: productAvailability[product._id] ? "gray" : "beige"
+          bgcolor: productAvailability[product._id] ? "beige" : "gray"
         }}
       >
         <Typography
           variant="h2"
           sx={{ mx: 4, textAlign: "center", color: "Black", m: 2, 
-          textDecoration: productAvailability[product._id] ? "line-through" : "none"}}
+          textDecoration: productAvailability[product._id] ? "none" : "line-through"}}
         >
           {product.name}
           <br />
-          {productAvailability[product._id] ? "Sold Out" : "Available"}
+          {productAvailability[product._id] ? "Available" : "Sold Out"}
         </Typography>
         <Avatar
           variant={"rounded"}
@@ -133,7 +200,20 @@ export default function AdminProducts() {
           {product.quantity} {" st"}
         </Typography>
         <Link to="/products/productdetail"></Link>
-        <EditIcon onClick={() => console.log("Edit")} />
+        <EditIcon onClick={() => handleEditClick(product)} />
+        {showEditForm === product._id && (
+              <div>
+                <form onSubmit={(e) => handleSaveClick(e, product._id)}>
+                  <TextField onChange={handleEdit} label="Name" name="name" type="text"/>
+                  <TextField onChange={handleEdit} label="URL" name="image" type="text"/>
+                  <textarea  onChange={handleEdit} name="shortDesc" placeholder="Short Description" />
+                  <textarea  onChange={handleEdit} name="description"  placeholder="Description" />
+                  <TextField onChange={handleEdit} label="price" name="price" type="number"/>
+                  <TextField onChange={handleEdit} label="QT" name="quantity" type="number"/>
+                  <Button type="submit" variant="contained" color="success" disabled={!isFormValid()}>Save</Button>
+                </form>
+              </div>
+            )}
         <DeleteForeverIcon onClick={() => removedProductData(product._id)} />
         <BackHandIcon
         sx={{ padding: "1rem" }}
@@ -142,8 +222,6 @@ export default function AdminProducts() {
       </Box>
     </Paper>
   ));
-
-
 
   return (
     <div>
@@ -158,7 +236,7 @@ export default function AdminProducts() {
           <textarea style={{ marginTop : "10px" }} onChange={handleChange} name="shortDesc" placeholder="Short Description" />
           <textarea style={{ marginTop : "10px", marginBottom: "10px"}} onChange={handleChange} name="description"  placeholder="Description" />
           <label htmlFor="isAvailable">Available</label>
-          <Switch {...label} type="checkbox" name="isAvailable" defaultChecked />
+          <Switch {...label} type="checkbox" name="isAvailable" />
           <Stack direction="row" spacing={2}>
             <Button type="submit" variant="contained" color="success">
               Create Product
