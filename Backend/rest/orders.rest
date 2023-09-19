@@ -11,18 +11,17 @@ POST http://localhost:3000/orders/add
 Content-type: application/json
 
 {
-    "name": "Sargon",
-    "orderNumber": 1,
-    "paymentMethod": "Card",
-    "email": "perp@mail.com",
+    "name": "Semester Phillipe",
+    "email": "Cypern@mail.com",
     "phone": 2,
-    "adress": "hyddan 12 Mariestad",
+    "adress": "Cypern Headquarters",
+    "zip": "41233",
     "cart": [{
         "productId": "65005ccb511d2f8d52a25be9",
         "quantity": 2
     }],
     "isSent": false,
-    "delivery": "Korp 20230914",
+    "delivery": "Cypern Headquarters",
     "isDeleted": false
 }
 
