@@ -43,11 +43,11 @@ Content-Type: application/json
 
 // === update product ===
 
-PUT http://localhost:3000/products/update/65001c6d32af6a7c3d74aa06
+PUT http://localhost:3000/products/update/650348a7a59e2c177a4a637c
 Content-Type: application/json
 
 {
-    "name": "KAKAN",
+    "name": "apple",
     "image": "https://unsplash.com/photos/3fjyk4CLfvA",
     "shortDesc": "POTATO!",
     "description": "POTATO!POTATO!POTATO!",

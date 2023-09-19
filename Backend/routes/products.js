@@ -77,7 +77,7 @@ router.put("/delete/:id", async (req, res) => {
 router.put("/update/:id", async (req, res) => {
   try {
     const productId = req.params.id;
-    const { name, description } = req.body;
+    const { name, description, shortDesc, price, quantity, image } = req.body;
 
     const product = await ProductModel.findById(productId);
 
@@ -87,7 +87,11 @@ router.put("/update/:id", async (req, res) => {
 
     // uppdatera produktens uppgifter
     product.name = name;
+    product.image = image
     product.description = description;
+    product.shortDesc = shortDesc
+    product.price = price
+    product.quantity = quantity
 
     // spara uppdateringar i databasen
     await product.save();
