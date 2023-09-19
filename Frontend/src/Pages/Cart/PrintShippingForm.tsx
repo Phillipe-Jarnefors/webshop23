@@ -1,7 +1,6 @@
 import {
   FormControl,
   RadioGroup,
-  Divider,
   Paper,
   FormControlLabel,
   Radio,
@@ -25,27 +24,6 @@ export default function PrintShippingForm() {
   const [error, setError] = useState(false);
   const [helperText, setHelperText] = useState("");
 
-  const shippingOptions: Record<
-    string,
-    { vendor: string; price: number; deliveryTime: number }
-  > = {
-    Posten: {
-      vendor: "Posten",
-      price: 139,
-      deliveryTime: 1,
-    },
-    DHL: {
-      vendor: "DHL",
-      price: 119,
-      deliveryTime: 2,
-    },
-    PetEx: {
-      vendor: "PetEx",
-      price: 89,
-      deliveryTime: 3,
-    },
-  };
-
   const calcDate = (shippingTime: number) => {
     const today = new Date();
     const deliveryDate = new Date();
@@ -53,6 +31,28 @@ export default function PrintShippingForm() {
     const formattedDate = deliveryDate.toISOString().split("T")[0];
     return formattedDate;
   };
+
+  const PostenDelivery = calcDate(1);
+  const DHLDelivery = calcDate(2);
+  const PetExDelivery = calcDate(3);
+
+  const shippingOptions = [
+    {
+      vendor: "Posten",
+      price: 139,
+      deliveryTime: PostenDelivery,
+    },
+    {
+      vendor: "DHL",
+      price: 119,
+      deliveryTime: DHLDelivery,
+    },
+    {
+      vendor: "PetEx",
+      price: 89,
+      deliveryTime: PetExDelivery,
+    },
+  ];
 
   const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
@@ -65,12 +65,12 @@ export default function PrintShippingForm() {
     if (value) {
       setError(false);
 
-      if (shippingOptions[value]) {
-        const shippingData = {
-          ...shippingOptions[value],
-          deliveryTime: calcDate(shippingOptions[value].deliveryTime),
-        };
-        localStorage.setItem("shipping", JSON.stringify(shippingData));
+      const selectedOption = shippingOptions.find(
+        (option) => option.vendor === value
+      );
+
+      if (selectedOption) {
+        localStorage.setItem("shipping", JSON.stringify(selectedOption));
         navigate(`/checkout`);
       }
     } else {
@@ -99,26 +99,23 @@ export default function PrintShippingForm() {
         >
           <Stack
             direction={{ xs: "column", md: "row" }}
-            divider={<Divider orientation="vertical" flexItem />}
             spacing={{ xs: 1, sm: 2, md: 4 }}
           >
-            {Object.keys(shippingOptions).map((option) => (
-              <Paper key={option} sx={{ padding: 4, width: "100%" }}>
+            {shippingOptions.map((option) => (
+              <Paper key={option.vendor} sx={{ padding: 4 }}>
                 <FormControlLabel
-                  value={option}
+                  value={option.vendor}
                   control={<Radio />}
-                  label={option}
+                  label={option.vendor}
                 />
-                <Typography>{shippingOptions[option].price} kr</Typography>
-                <Typography>
-                  Leveranstid: {shippingOptions[option].deliveryTime}{" "}
-                  {shippingOptions[option].deliveryTime >= 2 ? "dagar" : "dag"}
-                </Typography>
+                <Typography>{option.price} kr</Typography>
+                <Typography>Preliminärt leveransdatum:</Typography>
+                <Typography>{option.deliveryTime}</Typography>
               </Paper>
             ))}
           </Stack>
         </RadioGroup>
-        <FormHelperText>{helperText}</FormHelperText>
+        <FormHelperText sx={{ fontSize: "1rem" }}>{helperText}</FormHelperText>
       </FormControl>
 
       <Grid container spacing={2} justifyContent="center">
