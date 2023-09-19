@@ -15,7 +15,7 @@ export default function Checkout() {
     setSelectedPaymentMethod(method);
   }
 
-  const handleSwishPaymentSubmit = (swishInfo: string) => {
+  const handleSwishPaymentSubmit = (swishInfo: { phoneNumber: string; amount: string }) => {
     // skicka informationen till BE ?
     console.log("Swish  betalning skickad:", swishInfo);
     // spara i localStorage
@@ -24,11 +24,17 @@ export default function Checkout() {
     navigate(`/submittedOrder`);
   }
 
-  const handleCardPaymentSubmit = (cardInfo: string) => {
+  const handleCardPaymentSubmit = (cardInfo: {
+    cardNumber: string;
+    cardDate: string;
+    cvv: string;
+  },
+  amount: string) => {
     // skicka informationen till BE ?
     console.log("Kortbetalning skickad:", cardInfo);
     // spara i localStorage/ kryptera???
     localStorage.setItem('cardPaymentInfo', JSON.stringify(cardInfo));
+    localStorage.setItem('totalAmount', JSON.stringify(amount));
     navigate(`/submittedOrder`);
   }
 
@@ -67,14 +73,14 @@ export default function Checkout() {
       {selectedPaymentMethod === "swish" && (
         <div>
           <h2>SWISH-betalning</h2>
-          <SwishPaymentForm onSubmit={handleSwishPaymentSubmit}/>
+          <SwishPaymentForm onSubmitSwish={handleSwishPaymentSubmit}/>
         </div>
       )}
 
       {selectedPaymentMethod === "betalkort" && (
         <div>
           <h2>KORT-betalning</h2>
-          <CardPaymentForm onSubmit={handleCardPaymentSubmit}/>
+          <CardPaymentForm onSubmitCard={handleCardPaymentSubmit}/>
         </div>
       )}
       </Container>

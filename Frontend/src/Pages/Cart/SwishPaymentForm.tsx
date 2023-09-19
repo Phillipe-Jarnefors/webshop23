@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react'
+import { SwishPaymentFormProps } from '../../Utilities/Interfaces';
 
-export default function SwishPaymentMethod({ onSubmit }) {
+
+
+export default function SwishPaymentMethod({ onSubmitSwish }: SwishPaymentFormProps) {
   const [swishInfo, setSwishInfo] = useState({
     phoneNumber: "",
     amount: "",
   });
 
-  const handleSwishInfoChange = (e: { target: { name: string; value: number; }; }) => {
+  const handleSwishInfoChange = (e: { target: { name: string; value: string; }; }) => {
     const { name, value } = e.target;
     setSwishInfo((prevState) => ({
       ...prevState,
@@ -16,9 +19,10 @@ export default function SwishPaymentMethod({ onSubmit }) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSubmit(swishInfo);
+    onSubmitSwish(swishInfo);
   };
 
+  
   // hämta telefonnummer från localStorage
   useEffect(() => {
     const savedPhonedNumber = localStorage.getItem("phoneNumber");
@@ -36,10 +40,9 @@ export default function SwishPaymentMethod({ onSubmit }) {
     if (savedTotalPrice) {
       setSwishInfo((prevState) => ({
         ...prevState,
-        amount: parseFloat(savedTotalPrice),
+        amount: savedTotalPrice,
       }));
     }
-
   }, []);
 
 
