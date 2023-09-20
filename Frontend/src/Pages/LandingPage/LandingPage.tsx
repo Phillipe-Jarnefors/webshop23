@@ -26,7 +26,7 @@ export default function LandingPage() {
             <Box
               sx={{
                 position: "absolute",
-                top: "50%",
+                top: "55%",
                 left: "50%",
                 transform: "translate(-50%, -100%)",
                 textAlign: "center",
@@ -40,6 +40,7 @@ export default function LandingPage() {
                 Hitta din nya familjemedlem!
               </Typography>
               <Button
+                size="large"
                 variant="contained"
                 color="primary"
                 onClick={() => navigate(`/products`)}
