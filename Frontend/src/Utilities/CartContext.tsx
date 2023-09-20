@@ -5,6 +5,7 @@ export const CartContext = createContext<CartContextValue>({
   cart: [],
   addToCart: () => {},
   removeFromCart: () => {},
+  emptyCart: () => {},
 });
 
 export const CartProvider = ({ children }: Props) => {
@@ -55,10 +56,14 @@ export const CartProvider = ({ children }: Props) => {
         setCart(updateCart);
         localStorage.setItem("cart", JSON.stringify(updateCart));
     }
-};
+  };
+  
+  const emptyCart = () => {
+    setCart([])
+  }
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart  }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, emptyCart }}>
       {children}
     </CartContext.Provider>
   );

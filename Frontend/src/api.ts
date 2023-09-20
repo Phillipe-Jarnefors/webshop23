@@ -1,4 +1,4 @@
-import { AddProduct, EditedProduct} from "./Utilities/Interfaces";
+import { AddProduct, EditedProduct, CreateOrderTemplate } from "./Utilities/Interfaces";
 
 export async function getProducts() {
   const res = await fetch("http://localhost:3000/products");
@@ -13,7 +13,6 @@ export async function getProducts() {
   return data;
 }
 
-
 export async function getOrders() {
   const res = await fetch("http://localhost:3000/orders");
 
@@ -24,6 +23,40 @@ export async function getOrders() {
   }
   const data = await res.json();
   return data;
+}
+
+export async function CreateOrder(order: CreateOrderTemplate) {
+  const settings = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name: order.name,
+      email: order.email,
+      phone: order.phone,
+      adress: order.adress,
+      zip: order.zip,
+      totalPrice: order.totalPrice,
+      cart: order.cart.map((cartItem) => ({
+        productId: cartItem.productId,
+        quantity: cartItem.quantity,
+      })),
+      isSent: false,
+      delivery: order.delivery,
+      isDeleted: false,
+    }),
+  };
+  try {
+    const res = await fetch("http://localhost:3000/orders/add", settings);
+    const data = await res.json();
+
+    console.log(data);
+
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 export async function removeProduct(id: string) {
@@ -51,7 +84,6 @@ export async function removeProduct(id: string) {
   }
 }
 
-
 export async function getProductById(productId: string) {
   try {
     const res = await fetch(`http://localhost:3000/products/${productId}`);
@@ -67,7 +99,6 @@ export async function getProductById(productId: string) {
     throw error;
   }
 }
-
 
 export async function updateProduct(
   productUpdate: EditedProduct,
@@ -100,8 +131,6 @@ export async function updateProduct(
     console.error(error);
   }
 }
-
-
 
 export async function updateAvailability(
   productId: string,
@@ -152,18 +181,14 @@ export async function addNewProduct(product: AddProduct) {
   }
 }
 
-
-export async function updateOrders(
-  orderId: string,
-  sent: boolean
-) {
+export async function updateOrders(orderId: string, sent: boolean) {
   const settings = {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      isSent : sent
+      isSent: sent,
     }),
   };
   try {
@@ -180,16 +205,14 @@ export async function updateOrders(
   }
 }
 
-export async function deleteOrder(
-  orderId: string,
-) {
+export async function deleteOrder(orderId: string) {
   const settings = {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      isDeleted : true
+      isDeleted: true,
     }),
   };
   try {
@@ -205,26 +228,3 @@ export async function deleteOrder(
     console.error(error);
   }
 }
-
-export async function addOrder(orderData: string) {
-  const  settings = {
-
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(orderData),
-  };
-  try {
-    const res = await fetch("http://localhost:3000/orders/add", settings);
-    if (!res.ok) {
-      throw new Error("Failed to add order");
-    }
-    const data = await res.json();
-    return data;
-  } catch (error) {
-    console.error("An error occurred while adding the order:", error);
-    throw error;
-  }
-}
-

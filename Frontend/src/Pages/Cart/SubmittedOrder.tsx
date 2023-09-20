@@ -7,7 +7,7 @@ export default function SubmittedOrder() {
     <>
     <div>
         <h2>Orderbekräftelse</h2>
-
+        <h1></h1>
         <button onClick={goBack}>Till butiken</button>
         
     </div>

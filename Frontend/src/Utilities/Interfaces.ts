@@ -1,4 +1,4 @@
-import { ReactNode} from "react";
+import { ReactNode } from "react";
 
 export interface Product {
   _id: string;
@@ -11,7 +11,6 @@ export interface Product {
   isDeleted: boolean;
   isAvailable: boolean;
 }
-
 
 export interface EditedProduct {
   name: string;
@@ -35,21 +34,39 @@ export interface AddProduct {
 
 export interface Orders {
   _id: string;
-  name: string,
-  orderNumber: string,
-  paymentMethod: string,
-  email: string,
-  phone: number,
-  adress: string,
+  name: string;
+  orderNumber: string;
+  paymentMethod: string;
+  email: string;
+  phone: number;
+  adress: string;
+  zip: string;
+  totalPrice: string;
   cart: [
     {
-      productId: string,
-      quantity: number
+      productId: string;
+      quantity: number;
     }
-  ],
-  isSent: boolean,
-  delivery: string,
-  isDeleted: boolean,
+  ];
+  isSent: boolean;
+  delivery: string;
+  isDeleted: boolean;
+}
+
+export interface CreateOrderTemplate {
+  name: string;
+  email: string;
+  phone: string;
+  adress: string;
+  zip: string;
+  totalPrice: string;
+  cart: {
+    productId: string;
+    quantity: string;
+  }[];
+  isSent: boolean;
+  delivery: string;
+  isDeleted: boolean;
 }
 
 export interface SwishPaymentFormProps {
@@ -65,26 +82,25 @@ export interface CardPaymentFormProps {
     },
     amount: string
   ) => void;
-
 }
 
-
-export interface CartProduct extends Product{
+export interface CartProduct extends Product {
   quantity: number;
 }
 
-export interface CartContextValue{
-  cart: CartProduct[],
+export interface CartContextValue {
+  cart: CartProduct[];
   addToCart: (product: Product) => void;
-  removeFromCart : (productId: string) => void;
+  removeFromCart: (productId: string) => void;
+  emptyCart: () => void,
 }
 
 export interface Props {
   children: ReactNode;
 }
 
-export interface BreadcrumbsProps{
-  activeStep: 1|2|3;
+export interface BreadcrumbsProps {
+  activeStep: 1 | 2 | 3;
 }
 
 
