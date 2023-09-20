@@ -9,9 +9,6 @@ import Button from "@mui/material/Button";
 export default function PersonalInformation() {
   const navigate = useNavigate();
 
-  const goHome = () => {
-    navigate(`/`);
-  };
   const goBack = () => {
     navigate(`/cart`);
   };
@@ -47,12 +44,6 @@ export default function PersonalInformation() {
     <>
       <Container>
         <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <div>
-              <button onClick={goHome}>TILL BUTIKEN</button>
-            </div>
-          </Grid>
-
           <Grid item xs={12} sm={8} md={6} mx={"auto"}>
             <Breadcrumb activeStep={1} />
             <form

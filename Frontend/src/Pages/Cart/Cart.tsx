@@ -26,7 +26,7 @@ function Cart() {
 
   const goHome = () => {
     console.log("klick på card!");
-    navigate(`/`);
+    navigate(`/products`);
   };
   const goToPersInfo = () => {
     console.log("klick på card!");
