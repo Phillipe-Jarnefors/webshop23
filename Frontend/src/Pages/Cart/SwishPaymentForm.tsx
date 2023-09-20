@@ -59,6 +59,7 @@ export default function SwishPaymentMethod({ onSubmitSwish }: SwishPaymentFormPr
                 name={"phoneNumber"}
                 value={swishInfo.phoneNumber}
                 onChange={handleSwishInfoChange}
+                disabled
               />
             </label>
           </div>
@@ -71,6 +72,7 @@ export default function SwishPaymentMethod({ onSubmitSwish }: SwishPaymentFormPr
                 name="amount"
                 value={swishInfo.amount}
                 onChange={handleSwishInfoChange}
+                disabled
               />
             </label>
           </div>

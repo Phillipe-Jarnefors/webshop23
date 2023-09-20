@@ -59,8 +59,10 @@ export default function AdminOrders() {
       <Box>
         <Typography>{order.name}</Typography>
         <Typography>{order.adress}</Typography>
+        <Typography>{order.zip}</Typography>
         <Typography>{order.email}</Typography>
         <Typography>{order.phone}</Typography>
+        <Typography>{order.totalPrice}</Typography>
         <Typography>{order.paymentMethod}</Typography>
 
         {order.cart.map((item, index) => (
