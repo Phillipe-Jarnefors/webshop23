@@ -84,5 +84,5 @@ export default function AdminOrders() {
     </Paper>
   ));
 
-  return <div style={{ display: "flex", flexWrap: "wrap" }}>{orderElem}</div>;
+  return <div className="order-wrapper" style={{ display: "flex",justifyContent: "center", flexWrap: "wrap" }}>{orderElem}</div>;
 }
