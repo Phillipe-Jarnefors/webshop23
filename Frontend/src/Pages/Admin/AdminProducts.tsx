@@ -312,7 +312,7 @@ export default function AdminProducts() {
                 size="small"
                 sx={{ mt: 1 }}
                 onChange={handleEdit}
-                label="price"
+                label="Price"
                 name="price"
                 type="number"
               />

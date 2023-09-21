@@ -19,7 +19,7 @@ export default function AllProducts() {
   const products = useLoaderData() as Product[];
 
   const navigate = useNavigate();
-  
+
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   // const [snackbarMessage, setSnackbarMessage] = useState('');
 
@@ -32,7 +32,11 @@ export default function AllProducts() {
     navigate(`/products/productdetail/${product._id}`);
   };
 
-  const productsElements = products.map((product) => (
+  const availableElements = products.filter(
+    (product) => product.isAvailable !== false
+  );
+
+  const productsElements = availableElements.map((product) => (
     <Paper
       elevation={2}
       key={product._id}
@@ -72,7 +76,7 @@ export default function AllProducts() {
             addToCart(product);
             // alert("Produkten har lagts till i kundvagnen.");
             setSnackbarOpen(true);
-            // setSnackbarMessage(snackbarMessage); 
+            // setSnackbarMessage(snackbarMessage);
           }}
         >
           Lägg till
@@ -96,12 +100,12 @@ export default function AllProducts() {
         {productsElements}
       </Box>
       <SnackbarAddProduct
-              open={snackbarOpen}
-              onClose={handleSnackbarClose}
-              // message="Produkten har lagts i kundvagnen"
-              // message={setSnackbarMessage}
-              // action={action}
-        />
+        open={snackbarOpen}
+        onClose={handleSnackbarClose}
+        // message="Produkten har lagts i kundvagnen"
+        // message={setSnackbarMessage}
+        // action={action}
+      />
     </Container>
   );
 }
