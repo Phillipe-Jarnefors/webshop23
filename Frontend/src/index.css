@@ -1,3 +1,6 @@
-textarea {
-  resize: none;
+body {
+  margin: 0px;
+  background-color: #fefae0;
+  height: 100%;
+  /* color: rgba(0, 0, 0, 0.194); */
 }

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getOrders, updateOrders, deleteOrder } from "../../api";
 import { Orders } from "../../Utilities/Interfaces";
 import { useLoaderData } from "react-router";
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Container, Paper, Typography } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
@@ -51,7 +51,7 @@ export default function AdminOrders() {
         flexDirection: "row",
         alignItems: "center",
         border: "solid 2px gray",
-        bgcolor: "darkkhaki",
+        bgcolor: "rgb(231, 226, 160)",
         m: 1,
         p: 5,
       }}
@@ -84,5 +84,19 @@ export default function AdminOrders() {
     </Paper>
   ));
 
-  return <div className="order-wrapper" style={{ display: "flex",justifyContent: "center", flexWrap: "wrap" }}>{orderElem}</div>;
+  return (
+    <Container>
+      <div
+        className="order-wrapper"
+        style={{
+          display: "flex",
+          justifyContent: "space-evenly",
+          flexWrap: "wrap",
+          margin: "15px",
+        }}
+      >
+        {orderElem}
+      </div>
+    </Container>
+  );
 }
