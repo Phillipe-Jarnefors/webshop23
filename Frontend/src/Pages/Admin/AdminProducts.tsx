@@ -374,6 +374,7 @@ export default function AdminProducts() {
               type="text"
               label="Name"
               variant="outlined"
+              value={formProduct.productName}
               required
             />
             <TextField
@@ -383,6 +384,7 @@ export default function AdminProducts() {
               name="image"
               type="text"
               label="Image URL"
+              value={formProduct.image}
               variant="outlined"
             />
             <TextField
@@ -392,6 +394,7 @@ export default function AdminProducts() {
               name="price"
               type="number"
               label="Price"
+              value={formProduct.price}
               variant="outlined"
             />
             <TextField
@@ -401,6 +404,7 @@ export default function AdminProducts() {
               name="quantity"
               type="number"
               label="Quantity st"
+              value={formProduct.quantity}
               variant="outlined"
             />
 
@@ -410,6 +414,7 @@ export default function AdminProducts() {
               label="Description"
               onChange={handleChange}
               name="description"
+              value={formProduct.description}
               multiline
               maxRows={4}
             />
@@ -420,6 +425,7 @@ export default function AdminProducts() {
               label="Short Description"
               onChange={handleChange}
               name="shortDesc"
+              value={formProduct.shortDesc}
               multiline
               maxRows={4}
             />
