@@ -3,8 +3,6 @@ import { CartContext } from "../../Utilities/CartContext";
 import { useNavigate } from "react-router-dom";
 import { Product } from "../../Utilities/Interfaces.ts";
 import Button from "@mui/material/Button";
-// import CartIcon from "@mui/icons-material/AddShoppingCart";
-// import DeleteIcon from "@mui/icons-material/Delete";
 import {
   Avatar,
   Container,
@@ -13,23 +11,25 @@ import {
   ListItem,
   ListItemText,
   Typography,
+  Stack,
 } from "@mui/material";
-// import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
-// import RemoveOutlinedIcon from '@mui/icons-material/RemoveOutlined';
 import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutlined";
 import RemoveShoppingCartOutlinedIcon from "@mui/icons-material/RemoveShoppingCartOutlined";
 
 function Cart() {
-  const { addToCart, removeFromCart, cart } = useContext(CartContext);
-
+  const { addToCart, removeFromCart, emptyCart, cart } = useContext(CartContext);
   const navigate = useNavigate();
 
-  const goHome = () => {
-    console.log("klick på card!");
+  const goBack = () => {
     navigate(`/products`);
   };
+
+  const empty = () => {
+    emptyCart();
+    localStorage.removeItem("cart");
+  }
+  
   const goToPersInfo = () => {
-    console.log("klick på card!");
     navigate(`/userinfo`);
 
     const totalPrice = calculateTotalPrice();
@@ -48,7 +48,6 @@ function Cart() {
   };
 
   const handleCardClick = (product: Product) => {
-    console.log("klick på card!");
     navigate(`/products/productdetail/${product._id}`);
   };
 
@@ -78,14 +77,12 @@ function Cart() {
         sx={{ marginBottom: "10px", fontSize: "32px" }}
         onClick={() => addToCart(product)}
       >
-        {/* Lägg till */}
       </AddShoppingCartOutlinedIcon>
 
       <RemoveShoppingCartOutlinedIcon
         sx={{ marginBottom: "10px", fontSize: "32px" }}
         onClick={() => handleRemoveClick(product)}
       >
-        {/* Ta bort */}
       </RemoveShoppingCartOutlinedIcon>
     </ListItem>
   ));
@@ -93,12 +90,26 @@ function Cart() {
   return (
     <>
       <div>
-        <button onClick={goHome}>TILL BUTIKEN</button>
-      </div>
-
-      <div>
         {cart.length === 0 ? (
-          <h2>Din kundvagn är tom</h2>
+          <Container
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            maxWidth: "sm",
+            paddingTop: "40px",
+          }}
+          >
+            <Typography
+            variant="h2"
+            sx={{ mx: 4, textAlign: "center", m: 2 }}
+            >Your cart is empty
+            </Typography>
+            <Button variant="contained" onClick={goBack}>
+              Back
+            </Button>
+          </Container>
         ) : (
           <Container
             sx={{
@@ -132,15 +143,25 @@ function Cart() {
               </Typography>
             </Paper>
 
+            <Stack direction="row" 
+                  spacing={2}
+                  sx={{ marginTop: "20px" }}>
+
+            <Button
+              variant="outlined"
+              onClick={() => empty()}
+            >
+              EMPTY CART
+            </Button>
+
             <Button
               variant="contained"
-              // endIcon={<CartIcon />}
-              sx={{ marginTop: "20px" }}
               onClick={() => goToPersInfo()}
             >
-              GÅ TILL KASSAN
+              CHECKOUT
             </Button>
-            {/* <button onClick={goToPersInfo}>GÅ TILL KASSAN</button> */}
+
+            </Stack>
           </Container>
         )}
       </div>
