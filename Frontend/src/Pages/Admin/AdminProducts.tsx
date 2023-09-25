@@ -158,8 +158,13 @@ export default function AdminProducts() {
 
   // Soft Delete Product
   const removedProductData = async (id: string) => {
-    console.log(removedProductData);
-    return await removeProduct(id);
+    try {
+      await removeProduct(id);
+      // Update the component state to remove the deleted product
+      setData((prevData) => prevData.filter((product) => product._id !== id));
+    } catch (error) {
+      console.error("Error when removing product: ", error);
+    }
   };
 
   //Toggle if the Product is available or not
