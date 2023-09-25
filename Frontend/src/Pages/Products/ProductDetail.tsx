@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Paper, Typography, Avatar, Container } from "@mui/material";
-//import { Box } from "@mui/system";
 import { getProductById } from "../../api.ts";
 import { Product } from "../../Utilities/Interfaces.ts";
-import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { CartContext } from "../../Utilities/CartContext";
 import Button from "@mui/material/Button";
@@ -18,18 +16,11 @@ export default function ProductDetail() {
   const [product, setProduct] = useState<Product | null>(null);
 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  // const [snackbarMessage, setSnackbarMessage] = useState('');
+
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
   };
 
-  const navigate = useNavigate();
-  const goBack = () => navigate("/");
-
-  // const goToCartClick = () => {
-  //     console.log("klick på card!");
-  //     navigate(`/cart`);
-  // }
 
   useEffect(() => {
     if (productId) {
@@ -49,10 +40,6 @@ export default function ProductDetail() {
 
   return (
     <>
-      <div>
-        <button onClick={goBack}>TILL BUTIKEN</button>
-        {/* <button onClick={goToCartClick}>TILL KASSAN</button> */}
-      </div>
       <Container>
         {product ? (
           <Paper
@@ -71,7 +58,7 @@ export default function ProductDetail() {
               variant="rounded"
               alt={product.name}
               src={product.image}
-              style={{ width: 340, height: 360 }}
+              style={{ width: 300, height: 320 }}
             />
             <Typography variant="h6" sx={{ mt: 3 }}>
               {product.description}
@@ -82,12 +69,9 @@ export default function ProductDetail() {
             <Button
               variant="contained"
               endIcon={<CartIcon />}
-              // onClick={() => addToCart(product)}
               onClick={() => {
                 addToCart(product);
-                // alert("Produkten har lagts till i kundvagnen.");
                 setSnackbarOpen(true);
-                // setSnackbarMessage(snackbarMessage); // öppna Snackbar
               }}
             >
               Lägg till

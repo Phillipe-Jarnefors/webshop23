@@ -27,12 +27,19 @@ import PersonalInformation from "./Pages/Cart/PersonalInformation";
 import ShippingMethod from "./Pages/Cart/ShippingMethod";
 import Checkout from "./Pages/Cart/Checkout";
 import SubmittedOrder from "./Pages/Cart/SubmittedOrder";
+import LandingPage from "./Pages/LandingPage/LandingPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<Layout />}>
-        <Route index element={<AllProducts />} loader={allProductsLoader} />
+        <Route index element={<LandingPage />} />
+
+        <Route
+          path="/products"
+          element={<AllProducts />}
+          loader={allProductsLoader}
+        />
 
         <Route path="/admin" element={<AdminParent />}>
           <Route
