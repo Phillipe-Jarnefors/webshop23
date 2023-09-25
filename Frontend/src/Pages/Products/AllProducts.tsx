@@ -33,7 +33,7 @@ export default function AllProducts() {
   };
 
   const availableElements = products.filter(
-    (product) => product.isAvailable !== false
+    (product) => product.isAvailable !== false && product.isDeleted !== true
   );
 
   const productsElements = availableElements.map((product) => (
