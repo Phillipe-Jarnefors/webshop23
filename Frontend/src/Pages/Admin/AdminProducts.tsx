@@ -11,7 +11,7 @@ import {
   Product,
 } from "../../Utilities/Interfaces.ts";
 import { useLoaderData } from "react-router";
-import { Paper, Box, Typography, Avatar } from "@mui/material";
+import { Paper, Box, Typography, Avatar, Container } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
@@ -111,7 +111,7 @@ export default function AdminProducts() {
   };
 
   //Check Input Validation
-  const isFormValid = () => {
+  const isEditProductValid = () => {
     return (
       editedProduct.name.trim() !== "" &&
       editedProduct.image.trim() !== "" &&
@@ -119,6 +119,17 @@ export default function AdminProducts() {
       editedProduct.description.trim() !== "" &&
       editedProduct.price > 0 &&
       editedProduct.quantity > 0
+    );
+  };
+
+  const isCreatedProductValid = () => {
+    return (
+      formProduct.productName.trim() !== "" &&
+      formProduct.image.trim() !== "" &&
+      formProduct.description.trim() !== "" &&
+      formProduct.shortDesc.trim() !== "" &&
+      formProduct.quantity !== 0 &&
+      formProduct.isAvailable === true
     );
   };
 
@@ -137,7 +148,7 @@ export default function AdminProducts() {
         isAvailable: true,
         isDeleted: false,
       });
-      setData((prevData) => [...prevData, newProduct]);
+      setData((prevState) => [...prevState, newProduct]);
       setProductAvailability((prevState) => ({
         ...prevState,
         [newProduct._id]: newProduct.isAvailable,
@@ -173,9 +184,14 @@ export default function AdminProducts() {
 
   const productElements = displayedProducts.map((product) => (
     <Paper
+      className="product-card"
       elevation={2}
       key={product._id}
-      sx={{ minWidth: 210, width: { md: 340 } }}
+      sx={{
+        width: { md: 340 },
+        boxShadow: "none",
+        backgroundColor: "transparent ",
+      }}
     >
       <Box
         sx={{
@@ -183,7 +199,11 @@ export default function AdminProducts() {
           flexDirection: "column",
           alignItems: "center",
           m: 1,
-          bgcolor: productAvailability[product._id] ? "beige" : "gray",
+          bgcolor: productAvailability[product._id] ? "#dda15e" : "lightgray",
+          padding: "10px",
+          paddingBottom: "px",
+          borderRadius: "10px",
+          boxShadow: "5",
         }}
       >
         <Typography
@@ -208,73 +228,121 @@ export default function AdminProducts() {
           src={product.image}
           style={{ width: 200, height: 200 }}
         />
-        <Typography sx={{ mt: 2 }}>{product.shortDesc}</Typography>
+        <Typography sx={{ mt: 2, fontWeight: "bold" }}>
+          {product.shortDesc}
+        </Typography>
         <Typography>
           {product.price} {" kr"}
+        </Typography>
+        <Typography>
           {product.quantity} {" st"}
         </Typography>
         <Link to="/products/productdetail"></Link>
-        <EditIcon onClick={() => handleEditClick(product)} />
+        <section
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            gap: "10px",
+            cursor: "pointer",
+          }}
+          className="product-edit-icons"
+        >
+          <EditIcon
+            sx={{ padding: "5px", cursor: "pointer" }}
+            onClick={() => handleEditClick(product)}
+          />
+          <DeleteForeverIcon
+            sx={{ padding: "5px", cursor: "pointer" }}
+            onClick={() => removedProductData(product._id)}
+          />
+          <BackHandIcon
+            sx={{ padding: "5px" }}
+            onClick={() => toggleAvailability(product._id)}
+          />
+        </section>
         {showEditForm === product._id && (
-          <div>
-            <form onSubmit={(e) => handleSaveClick(e, product._id)}>
+          <div className="edit-product-form">
+            <form
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                paddingBottom: "10px",
+              }}
+              onSubmit={(e) => handleSaveClick(e, product._id)}
+            >
               <TextField
+                size="small"
+                sx={{ mt: 1 }}
                 onChange={handleEdit}
                 label="Name"
                 name="name"
                 type="text"
               />
               <TextField
+                size="small"
+                sx={{ mt: 1 }}
                 onChange={handleEdit}
                 label="URL"
                 name="image"
                 type="text"
               />
-              <textarea
+              <TextField
+                size="small"
+                sx={{ mt: 2 }}
+                id="outlined-multiline-flexible"
+                label="Short Description"
                 onChange={handleEdit}
                 name="shortDesc"
-                placeholder="Short Description"
+                multiline
+                maxRows={4}
               />
-              <textarea
+
+              <TextField
+                size="small"
+                sx={{ mt: 2 }}
+                id="outlined-multiline-flexible"
+                label="Description"
                 onChange={handleEdit}
                 name="description"
-                placeholder="Description"
+                multiline
+                maxRows={4}
               />
+
               <TextField
+                size="small"
+                sx={{ mt: 1 }}
                 onChange={handleEdit}
-                label="price"
+                label="Price"
                 name="price"
                 type="number"
               />
               <TextField
+                size="small"
+                sx={{ mt: 1 }}
                 onChange={handleEdit}
                 label="QT"
                 name="quantity"
                 type="number"
               />
               <Button
+                sx={{ mt: 1 }}
                 type="submit"
                 variant="contained"
                 color="success"
-                disabled={!isFormValid()}
+                disabled={!isEditProductValid()}
               >
                 Save
               </Button>
             </form>
           </div>
         )}
-        <DeleteForeverIcon onClick={() => removedProductData(product._id)} />
-        <BackHandIcon
-          sx={{ padding: "1rem" }}
-          onClick={() => toggleAvailability(product._id)}
-        />
       </Box>
     </Paper>
   ));
 
   return (
-    <div>
-      <div>
+    <Container className="admin-container">
+      <div className="create-product-wrapper">
         <form
           style={{
             display: "flex",
@@ -283,8 +351,16 @@ export default function AdminProducts() {
           }}
           onSubmit={sendNewProduct}
         >
-          <fieldset style={{ display: "flex", flexDirection: "column" }}>
-            <legend>Create new product</legend>
+          <fieldset
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              width: "50%",
+            }}
+          >
+            <legend style={{ fontFamily: "Roboto , sans-serif" }}>
+              Create new product
+            </legend>
             <TextField
               sx={{ mt: 2 }}
               onChange={handleChange}
@@ -322,22 +398,41 @@ export default function AdminProducts() {
               label="Quantity st"
               variant="outlined"
             />
-            <textarea
-              style={{ marginTop: "10px" }}
-              onChange={handleChange}
-              name="shortDesc"
-              placeholder="Short Description"
-            />
-            <textarea
-              style={{ marginTop: "10px", marginBottom: "10px" }}
+
+            <TextField
+              sx={{ mt: 2 }}
+              id="outlined-multiline-flexible"
+              label="Description"
               onChange={handleChange}
               name="description"
-              placeholder="Description"
+              multiline
+              maxRows={4}
             />
-            <label htmlFor="isAvailable">Available</label>
+
+            <TextField
+              sx={{ mt: 2, mb: 2 }}
+              id="outlined-multiline-flexible"
+              label="Short Description"
+              onChange={handleChange}
+              name="shortDesc"
+              multiline
+              maxRows={4}
+            />
+
+            <label
+              style={{ fontFamily: "Roboto, sans-serif" }}
+              htmlFor="isAvailable"
+            >
+              Available
+            </label>
             <Switch {...label} type="checkbox" name="isAvailable" />
             <Stack direction="row" spacing={2}>
-              <Button type="submit" variant="contained" color="success">
+              <Button
+                type="submit"
+                variant="contained"
+                color="success"
+                disabled={!isCreatedProductValid()}
+              >
                 Create Product
               </Button>
             </Stack>
@@ -345,15 +440,18 @@ export default function AdminProducts() {
         </form>
       </div>
       <div
+        className="product-wrapper"
         style={{
           display: "flex",
           flexDirection: "row",
           flexWrap: "wrap",
           margin: "15px",
+          justifyContent: "center",
+          gap: "10px",
         }}
       >
         {productElements}
       </div>
-    </div>
+    </Container>
   );
 }
