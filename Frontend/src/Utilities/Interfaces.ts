@@ -54,6 +54,7 @@ export interface Orders {
 }
 
 export interface CreateOrderTemplate {
+  deliveryPrice: string;
   name: string;
   email: string;
   phone: string;
