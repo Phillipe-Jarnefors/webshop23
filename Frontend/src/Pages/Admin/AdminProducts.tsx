@@ -158,8 +158,13 @@ export default function AdminProducts() {
 
   // Soft Delete Product
   const removedProductData = async (id: string) => {
-    console.log(removedProductData);
-    return await removeProduct(id);
+    try {
+      await removeProduct(id);
+      // Update the component state to remove the deleted product
+      setData((prevData) => prevData.filter((product) => product._id !== id));
+    } catch (error) {
+      console.error("Error when removing product: ", error);
+    }
   };
 
   //Toggle if the Product is available or not
@@ -369,6 +374,7 @@ export default function AdminProducts() {
               type="text"
               label="Name"
               variant="outlined"
+              value={formProduct.productName}
               required
             />
             <TextField
@@ -378,6 +384,7 @@ export default function AdminProducts() {
               name="image"
               type="text"
               label="Image URL"
+              value={formProduct.image}
               variant="outlined"
             />
             <TextField
@@ -387,6 +394,7 @@ export default function AdminProducts() {
               name="price"
               type="number"
               label="Price"
+              value={formProduct.price}
               variant="outlined"
             />
             <TextField
@@ -396,6 +404,7 @@ export default function AdminProducts() {
               name="quantity"
               type="number"
               label="Quantity st"
+              value={formProduct.quantity}
               variant="outlined"
             />
 
@@ -405,6 +414,7 @@ export default function AdminProducts() {
               label="Description"
               onChange={handleChange}
               name="description"
+              value={formProduct.description}
               multiline
               maxRows={4}
             />
@@ -415,6 +425,7 @@ export default function AdminProducts() {
               label="Short Description"
               onChange={handleChange}
               name="shortDesc"
+              value={formProduct.shortDesc}
               multiline
               maxRows={4}
             />

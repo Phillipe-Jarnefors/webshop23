@@ -129,7 +129,6 @@ export default function Checkout() {
 
   return (
     <Container
-      elevation={0}
       sx={{
         display: "flex",
         flexDirection: "column",
