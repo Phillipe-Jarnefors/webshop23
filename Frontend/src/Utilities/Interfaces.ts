@@ -70,7 +70,11 @@ export interface CreateOrderTemplate {
 }
 
 export interface SwishPaymentFormProps {
-  onSubmitSwish: (swishInfo: { phoneNumber: string; amount: string }) => void;
+  onSubmitSwish: (swishInfo: { 
+    phoneNumber: string; 
+    amount: string;
+    shippingCost: string;
+   }) => void;
 }
 
 export interface CardPaymentFormProps {
@@ -80,7 +84,8 @@ export interface CardPaymentFormProps {
       cardDate: string;
       cvv: string;
     },
-    amount: string
+    amount: string,
+    shippingCost: string,
   ) => void;
 }
 
