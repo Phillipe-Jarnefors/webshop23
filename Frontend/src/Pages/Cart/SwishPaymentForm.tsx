@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { SwishPaymentFormProps } from '../../Utilities/Interfaces';
-
-
+import { Container, Button, TextField } from "@mui/material";
 
 export default function SwishPaymentMethod({ onSubmitSwish }: SwishPaymentFormProps) {
   const [swishInfo, setSwishInfo] = useState({
@@ -22,7 +21,6 @@ export default function SwishPaymentMethod({ onSubmitSwish }: SwishPaymentFormPr
     onSubmitSwish(swishInfo);
   };
 
-  
   // hämta telefonnummer från localStorage
   useEffect(() => {
     const savedPhonedNumber = localStorage.getItem("phoneNumber");
@@ -45,43 +43,53 @@ export default function SwishPaymentMethod({ onSubmitSwish }: SwishPaymentFormPr
     }
   }, []);
 
-
   return (
     <>
-      <div>
-      {/* <div>SwishPaymentMethod</div> */}
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>
-              Telefonnummer:
-              <input
+      <Container>
+        
+          <form onSubmit={handleSubmit}>
+
+            <div>
+              <TextField
                 type="text"
-                name={"phoneNumber"}
+                name="phoneNumber"
+                label="Phone Number"
+                variant="outlined"
+                fullWidth
                 value={swishInfo.phoneNumber}
                 onChange={handleSwishInfoChange}
+                sx={{ mt: 1, mb: 1}} 
                 disabled
               />
-            </label>
-          </div>
+            </div>
 
-          <div>
-            <label>
-              Belopp:
-              <input
+            <div>
+              <TextField
                 type="text"
                 name="amount"
+                label="Total"
+                variant="outlined"
+                fullWidth
                 value={swishInfo.amount}
                 onChange={handleSwishInfoChange}
+                sx={{ mt: 1, mb: 1}} 
                 disabled
               />
-            </label>
-          </div>
+            </div>
 
-          <div>
-            <button type="submit">Bekräfta SWISH-betalning</button>
-          </div>
-        </form>
-      </div>
+            <div>
+              <Button 
+                type="submit" 
+                variant="contained" 
+                sx={{ mt: 2, mb: 1 }}  
+              >
+                  ACCEPT
+              </Button>
+            </div>
+
+          </form>
+        
+      </Container>
     </>
   )
 }

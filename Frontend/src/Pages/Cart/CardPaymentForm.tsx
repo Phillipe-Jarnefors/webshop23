@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { CardPaymentFormProps } from "../../Utilities/Interfaces";
-import { Button } from "@mui/material";
+import { Button, Container, TextField } from "@mui/material";
 
 export default function CardPaymentForm({
-  onSubmitCard,
+onSubmitCard,
 }: CardPaymentFormProps) {
   const [cardInfo, setCardInfo] = useState({
     cardNumber: "",
@@ -54,62 +54,81 @@ export default function CardPaymentForm({
   }, []);
 
   return (
-    // <div>CardPaymentForm</div>
     <>
-      <div>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>
-              Kortnummer:
-              <input
+      <Container>
+
+          <form onSubmit={handleSubmit}>
+
+            <div>
+              <TextField
                 type="text"
                 name="cardNumber"
+                label="Card Number"
+                variant="outlined"
+                fullWidth
                 value={cardInfo.cardNumber}
                 onChange={handleCardInfoChange}
+                sx={{ mt: 1, mb: 1}}   
               />
-            </label>
-            <div>
-              <label>
-                Utgångsdatum:
-                <input
-                  type="date"
-                  name="cardDate"
-                  value={cardInfo.cardDate}
-                  onChange={handleCardInfoChange}
-                />
-              </label>
             </div>
+
             <div>
-              <label>
-                CVV:
-                <input
-                  type="text"
-                  name="cvv"
-                  value={cardInfo.cvv}
-                  onChange={handleCardInfoChange}
-                />
-              </label>
+              <TextField
+                type="date"
+                name="cardDate"
+                label="Expiration Date"
+                variant="outlined"
+                fullWidth
+                value={cardInfo.cardDate}
+                onChange={handleCardInfoChange}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                sx={{ mt: 1, mb: 1}} 
+              />
             </div>
+
             <div>
-              <label>
-                Belopp:
-                <input
-                  type="text"
-                  name="amount"
-                  value={amount}
-                  onChange={handleAmontChange}
-                  disabled
-                />
-              </label>
+              <TextField
+                type="text"
+                name="cvv"
+                label="CVV"
+                variant="outlined"
+                fullWidth
+                value={cardInfo.cvv}
+                onChange={handleCardInfoChange}
+                sx={{ mt: 1, mb: 1}} 
+              />
             </div>
+
             <div>
-              <Button type="submit" disabled={!isCardInfoValid()} variant="contained" color="success">
-                Bekräfta Kortbetalning
+              <TextField
+                type="text"
+                name="amount"
+                label="Total"
+                variant="outlined"
+                fullWidth
+                value={amount} 
+                onChange={handleAmontChange}
+                sx={{ mt: 1, mb: 1}} 
+                disabled
+              />
+            </div>
+
+            <div>
+              <Button 
+                type="submit" 
+                disabled={!isCardInfoValid()} 
+                variant="contained" 
+                sx={{ mt: 2, mb: 1}}  
+              >
+                ACCEPT
               </Button>
             </div>
-          </div>
-        </form>
-      </div>
+
+          </form>
+        
+      </Container>
     </>
   );
 }
