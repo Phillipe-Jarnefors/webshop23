@@ -91,6 +91,8 @@ export default function Checkout() {
   }) => {
     console.log("Swish betalning skickad:", swishInfo);
     localStorage.setItem("swishPaymentInfo", JSON.stringify(swishInfo));
+    setIsPaymentFormVisible(false);
+    setIsPaymentMethodVisible(false);
   };
 
   const handleCardPaymentSubmit = (
@@ -104,6 +106,8 @@ export default function Checkout() {
     console.log("Kortbetalning skickad:", cardInfo);
     localStorage.setItem("cardPaymentInfo", JSON.stringify(cardInfo));
     localStorage.setItem("totalAmount", JSON.stringify(amount));
+    setIsPaymentFormVisible(false);
+    setIsPaymentMethodVisible(false);
   };
 
   const sendOrder = async () => {
@@ -111,9 +115,9 @@ export default function Checkout() {
     const cardJSON = localStorage.getItem("cardPaymentInfo");
     if (swishJSON || cardJSON) {
       try {
-        await CreateOrder(orderInfo);
+        const createdOrder = await CreateOrder(orderInfo);
         emptyCart();
-        localStorage.clear();
+        localStorage.setItem("createdOrder", JSON.stringify(createdOrder));
         navigate(`/submittedOrder`);
       } catch (error) {
         console.error("Error creating order:", error);
@@ -203,40 +207,17 @@ export default function Checkout() {
       </Paper>
 
       <div>
-        <label>
-          <input
-            type="radio"
-            value="betalkort"
-            checked={selectedPaymentMethod === "betalkort"}
-            onChange={() => handlePaymentMethodChange("betalkort")}
-          />
-          BETALKORT
-        </label>
-      </div>
-
-      {selectedPaymentMethod === "swish" && (
-        <div>
-          <h2>SWISH-betalning</h2>
-          <SwishPaymentForm onSubmitSwish={handleSwishPaymentSubmit} />
-        </div>
-      )}
-
-      {selectedPaymentMethod === "betalkort" && (
-        <div>
-          <h2>KORT-betalning</h2>
-          <CardPaymentForm onSubmitCard={handleCardPaymentSubmit} />
-        </div>
-      )}
-
-      <div>
-        <Button variant="contained" onClick={goBack}>
-          Back
-        </Button>
+        {isBackButtonVisible && (
+          <Button variant="contained" onClick={goBack}>
+            Back
+          </Button>
+        )}
         <Button
           type="submit"
           onClick={sendOrder}
           variant="contained"
           color="success"
+          sx={{ m: 2 }}
         >
           Checkout
         </Button>
