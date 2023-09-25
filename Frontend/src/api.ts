@@ -161,6 +161,10 @@ export async function updateAvailability(
 
 export async function addNewProduct(product: AddProduct) {
   const settings = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({
       name: product.productName,
       image: product.image,
@@ -175,6 +179,7 @@ export async function addNewProduct(product: AddProduct) {
   try {
     const res = await fetch("http://localhost:3000/products/add", settings);
     const data = await res.json();
+    console.log("product sent")
     return data;
   } catch (error) {
     console.error(error);
