@@ -4,6 +4,7 @@ import { Button, Container, TextField } from "@mui/material";
 
 export default function CardPaymentForm({
 onSubmitCard,
+shippingCost
 }: CardPaymentFormProps) {
   const [cardInfo, setCardInfo] = useState({
     cardNumber: "",
@@ -16,6 +17,7 @@ onSubmitCard,
   const isCardInfoValid = () => {
     return (
       cardInfo.cardNumber.trim() !== "" &&
+      cardInfo.cardDate.trim() !== "" &&
       cardInfo.cvv.trim() !== ""
     );
   };
@@ -38,8 +40,8 @@ onSubmitCard,
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (cardInfo.cardNumber && cardInfo.cardDate && cardInfo.cvv && amount) {
-      onSubmitCard(cardInfo, amount);
+    if (cardInfo.cardNumber && cardInfo.cardDate && cardInfo.cvv && amount && shippingCost !== null ) {
+      onSubmitCard(cardInfo, amount, shippingCost);
     } else {
       alert("Fyll i alla fält!");
       console.log("Fyll i alla fält!");
@@ -47,11 +49,16 @@ onSubmitCard,
   };
 
   useEffect(() => {
-    const savedTotalPrice = localStorage.getItem("totalPrice");
-    if (savedTotalPrice) {
-      setAmount(savedTotalPrice);
-    }
-  }, []);
+  const savedTotalPrice = localStorage.getItem("totalPrice");
+  const shippingCost= localStorage.getItem("shipping");
+  if (savedTotalPrice && shippingCost !== null) {  
+    const parsedShipping = shippingCost ? JSON.parse(shippingCost): null;
+    const totalAmount = Number(savedTotalPrice) + Number(parsedShipping.price);
+    setAmount(totalAmount.toString());
+  }
+}, [shippingCost]);
+
+  
 
   return (
     <>

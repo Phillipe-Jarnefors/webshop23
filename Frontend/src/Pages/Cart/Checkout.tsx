@@ -16,6 +16,7 @@ import SwishPaymentForm from "./SwishPaymentForm";
 import { CreateOrderTemplate } from "../../Utilities/Interfaces";
 import { CreateOrder } from "../../api";
 import { CartContext } from "../../Utilities/CartContext";
+import ShippingMethod from "./ShippingMethod";
 
 export default function Checkout() {
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ export default function Checkout() {
   const [isPaymentFormVisible, setIsPaymentFormVisible] = useState(true);
   const [isPaymentMethodVisible, setIsPaymentMethodVisible] = useState(true);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
+  const [isPriceDetailVisible, setIsPriceDetailVisible] = useState(false);
 
   const [orderInfo, setOrderInfo] = useState<CreateOrderTemplate>({
     name: "",
@@ -60,6 +62,7 @@ export default function Checkout() {
       const adress: string = user.adress;
       const zip: string = user.zip;
       const vendor: string = shipping.vendor;
+      const price: string = shipping.price;
 
       const formattedCart = cart.map((cartItem: any) => ({
         productId: cartItem._id,
@@ -76,6 +79,8 @@ export default function Checkout() {
         totalPrice: totalAmount,
         cart: formattedCart || [],
         delivery: vendor,
+        deliveryPrice: price
+        
       }));
     }
   }, []);
@@ -93,6 +98,8 @@ export default function Checkout() {
     localStorage.setItem("swishPaymentInfo", JSON.stringify(swishInfo));
     setIsPaymentFormVisible(false);
     setIsPaymentMethodVisible(false);
+    setIsPriceDetailVisible(true);
+
   };
 
   const handleCardPaymentSubmit = (
@@ -108,6 +115,7 @@ export default function Checkout() {
     localStorage.setItem("totalAmount", JSON.stringify(amount));
     setIsPaymentFormVisible(false);
     setIsPaymentMethodVisible(false);
+    setIsPriceDetailVisible(true);
   };
 
   const sendOrder = async () => {
@@ -203,8 +211,40 @@ export default function Checkout() {
             <CardPaymentForm onSubmitCard={handleCardPaymentSubmit} />
           </div>
         )}
-      </Paper>
 
+          {isPriceDetailVisible && (
+            <>
+              <Typography
+              variant="h3"
+              sx={{ mx: 4, textAlign: "left", color: "black", m: 2 }}
+            >
+              Total:
+            </Typography>
+
+            <Typography
+              variant="h3"
+              sx={{ mx: 4, textAlign: "left", color: "#bc6c25", m: 2 }}
+            >
+              {orderInfo.totalPrice} kr
+            </Typography>
+
+            <Typography
+              variant="h3"
+              sx={{ mx: 4, textAlign: "left", color: "black", m: 2 }}
+            >
+              Moms: {Math.floor(Number(orderInfo.totalPrice) * 0.2)} kr
+            </Typography>
+
+            <Typography
+              variant="h3"
+              sx={{ mx: 4, textAlign: "left", color: "black", m: 2 }}
+            >
+              Delivery: {orderInfo.deliveryPrice} kr
+            </Typography>
+            </>   
+          )}
+
+      </Paper>
       <div>
         {isBackButtonVisible && (
           <Button variant="contained" onClick={goBack}>

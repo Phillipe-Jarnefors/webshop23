@@ -6,6 +6,7 @@ export default function SwishPaymentMethod({ onSubmitSwish }: SwishPaymentFormPr
   const [swishInfo, setSwishInfo] = useState({
     phoneNumber: "",
     amount: "",
+    shippingCost: ""
   });
 
   const handleSwishInfoChange = (e: { target: { name: string; value: string; }; }) => {
@@ -34,14 +35,22 @@ export default function SwishPaymentMethod({ onSubmitSwish }: SwishPaymentFormPr
 
   // hämta totalPrice
   useEffect(() => {
-    const savedTotalPrice = localStorage.getItem("totalPrice");
-    if (savedTotalPrice) {
-      setSwishInfo((prevState) => ({
-        ...prevState,
-        amount: savedTotalPrice,
-      }));
-    }
-  }, []);
+  const savedTotalPrice = localStorage.getItem("totalPrice");
+  if (savedTotalPrice) {
+    // hämtar fraktkostnad 
+    const selectedShipping = localStorage.getItem("shipping");
+    const parsedShipping = selectedShipping ? JSON.parse(selectedShipping): null;
+    const shippingCost = parsedShipping ? parsedShipping.price : 0;
+
+    // lägger till fraktkostnad till totalpriset
+    const totalAmount = parseFloat(savedTotalPrice) + shippingCost;
+    
+    setSwishInfo((prevState) => ({
+      ...prevState,
+      amount: totalAmount.toString(),
+    }));
+  }
+}, []);
 
   return (
     <>

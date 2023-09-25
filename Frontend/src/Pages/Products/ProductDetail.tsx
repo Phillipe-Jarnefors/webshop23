@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { Paper, Typography, Avatar, Container } from "@mui/material";
+import { useParams, useNavigate } from "react-router-dom";
+import { Paper, Typography, Avatar, Container, Stack } from "@mui/material";
 import { getProductById } from "../../api.ts";
 import { Product } from "../../Utilities/Interfaces.ts";
 import { useContext } from "react";
@@ -11,6 +11,11 @@ import SnackbarAddProduct from "./SnackbarAddProduct";
 
 export default function ProductDetail() {
   const { addToCart } = useContext(CartContext);
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(`/products`);
+  };
 
   const { productId } = useParams<{ productId?: string }>();
   const [product, setProduct] = useState<Product | null>(null);
@@ -66,6 +71,18 @@ export default function ProductDetail() {
             <Typography variant="h3" sx={{ mt: 3, color: "black" }}>
               Pris: {product.price} kr
             </Typography>
+            
+            <Stack direction="row" 
+                  spacing={2}
+                  sx={{ marginTop: "20px" }}>
+            <Button
+              variant="outlined"
+              onClick={() => {
+                goBack();
+              }}
+            >
+              TILLBAKA
+            </Button>
             <Button
               variant="contained"
               endIcon={<CartIcon />}
@@ -76,6 +93,9 @@ export default function ProductDetail() {
             >
               Lägg till
             </Button>
+            </Stack>
+
+
           </Paper>
         ) : (
           <Typography variant="h2">Produkt hittades inte</Typography>
