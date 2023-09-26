@@ -16,7 +16,7 @@ import SwishPaymentForm from "./SwishPaymentForm";
 import { CreateOrderTemplate } from "../../Utilities/Interfaces";
 import { CreateOrder } from "../../api";
 import { CartContext } from "../../Utilities/CartContext";
-import ShippingMethod from "./ShippingMethod";
+//import ShippingMethod from "./ShippingMethod";
 
 
 export default function Checkout() {
@@ -32,6 +32,7 @@ export default function Checkout() {
   const [isPriceDetailVisible, setIsPriceDetailVisible] = useState(false);
 
   const [orderInfo, setOrderInfo] = useState<CreateOrderTemplate>({
+    deliveryPrice: "",
     name: "",
     email: "",
     phone: "",
@@ -207,9 +208,10 @@ export default function Checkout() {
             <CardPaymentForm onSubmitCard={handleCardPaymentSubmit} />
           </div>
         )}
+
           {isPriceDetailVisible && (
             <>
-              <Typography
+            <Typography
               variant="h3"
               sx={{ mx: 4, textAlign: "left", color: "black", m: 2 }}
             >
@@ -220,14 +222,14 @@ export default function Checkout() {
               variant="h3"
               sx={{ mx: 4, textAlign: "left", color: "#bc6c25", m: 2 }}
             >
-              {orderInfo.totalPrice} kr
+              {Number(orderInfo.totalPrice) + Number(orderInfo.deliveryPrice)} kr
             </Typography>
 
             <Typography
               variant="h3"
               sx={{ mx: 4, textAlign: "left", color: "black", m: 2 }}
             >
-              Moms: {Math.floor(Number(orderInfo.totalPrice) * 0.2)} kr
+              Moms: {Math.floor((Number(orderInfo.totalPrice) + Number(orderInfo.deliveryPrice)) * 0.2)} kr
             </Typography>
 
             <Typography

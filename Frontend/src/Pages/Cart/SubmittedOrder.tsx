@@ -34,6 +34,14 @@ export default function SubmittedOrder() {
     if (orderInfoJSON) {
       const orderInfo = JSON.parse(orderInfoJSON);
 
+    // hämtar fraktkostnad 
+    const selectedShipping = localStorage.getItem("shipping");
+    const parsedShipping = selectedShipping ? JSON.parse(selectedShipping): null;
+    const shippingCost = parsedShipping ? parsedShipping.price : 0;
+
+    // lägger till fraktkostnad till totalpriset
+    const totalAmount = parseFloat(orderInfo.totalPrice) + shippingCost;
+
         return (
           <>
           <Container>
@@ -121,7 +129,7 @@ export default function SubmittedOrder() {
                 variant="h3"
                 sx={{ mx: 4, textAlign: "left", color: "#bc6c25", m: 2 }}
               >
-                {orderInfo.totalPrice} kr
+                {totalAmount} kr
               </Typography>
 
               <Button 
