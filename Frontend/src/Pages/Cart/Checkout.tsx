@@ -217,6 +217,12 @@ export default function Checkout() {
             <>
             <Typography
               variant="h3"
+              sx={{ mx: 4, textAlign: "left", color: "#bc6c25", m: 4 }}
+            >
+              Thank you for your payment!
+            </Typography>
+            <Typography
+              variant="h3"
               sx={{ mx: 4, textAlign: "left", color: "black", m: 2 }}
             >
               Total:
@@ -242,6 +248,13 @@ export default function Checkout() {
             >
               Delivery: {orderInfo.deliveryPrice} kr
             </Typography>
+            <Typography
+              variant="h3"
+              sx={{ mx: 4, textAlign: "center", color: "green", mt: 5 }}
+            >
+              Go to CHECKOUT:
+            </Typography>
+            
             </>   
           )}
 
