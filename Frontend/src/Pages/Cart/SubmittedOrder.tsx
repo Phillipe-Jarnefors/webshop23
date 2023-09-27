@@ -34,6 +34,7 @@ export default function SubmittedOrder() {
 
     if (orderInfoJSON) {
       const orderInfo = JSON.parse(orderInfoJSON);
+      const cartItems = JSON.parse(cartItemsJSON as string)
 
     // hämtar fraktkostnad 
     const selectedShipping = localStorage.getItem("shipping");
