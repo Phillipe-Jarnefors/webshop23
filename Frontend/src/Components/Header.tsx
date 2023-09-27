@@ -26,7 +26,7 @@ export default function Header() {
                 variant="h2"
                 component="div"
                 sx={{ flexGrow: 1, color: "black", cursor: "pointer" }}
-                onClick={() => navigate(`/`)}
+                onClick={() => navigate(`/products`)}
               >
                 Marsvinsbutiken
               </Typography>

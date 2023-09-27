@@ -28,6 +28,7 @@ import ShippingMethod from "./Pages/Cart/ShippingMethod";
 import Checkout from "./Pages/Cart/Checkout";
 import SubmittedOrder from "./Pages/Cart/SubmittedOrder";
 import LandingPage from "./Pages/LandingPage/LandingPage";
+import Error from "./Components/Error";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -62,6 +63,7 @@ const router = createBrowserRouter(
           path="/products/productdetail/:productId"
           element={<ProductDetail />}
         />
+        <Route path="*" element={<Error/> } errorElement={<Error/>}/>
       </Route>
     </>
   )

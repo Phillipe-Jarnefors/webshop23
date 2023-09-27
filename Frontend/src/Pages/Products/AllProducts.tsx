@@ -21,7 +21,6 @@ export default function AllProducts() {
   const navigate = useNavigate();
 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  // const [snackbarMessage, setSnackbarMessage] = useState('');
 
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
@@ -74,9 +73,7 @@ export default function AllProducts() {
           sx={{ marginBottom: "10px" }}
           onClick={() => {
             addToCart(product);
-            // alert("Produkten har lagts till i kundvagnen.");
             setSnackbarOpen(true);
-            // setSnackbarMessage(snackbarMessage);
           }}
         >
           Lägg till
@@ -102,9 +99,6 @@ export default function AllProducts() {
       <SnackbarAddProduct
         open={snackbarOpen}
         onClose={handleSnackbarClose}
-        // message="Produkten har lagts i kundvagnen"
-        // message={setSnackbarMessage}
-        // action={action}
       />
     </Container>
   );

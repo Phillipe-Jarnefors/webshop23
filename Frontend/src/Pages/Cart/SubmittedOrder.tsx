@@ -30,10 +30,11 @@ export default function SubmittedOrder() {
     };
 
     const orderInfoJSON = localStorage.getItem("createdOrder");
+    const cartItemsJSON = localStorage.getItem("cart")
 
     if (orderInfoJSON) {
-      const orderInfo = JSON.parse(orderInfoJSON);
-
+      const orderInfo = JSON.parse(orderInfoJSON as string);
+      const cartItems = JSON.parse(cartItemsJSON as string)
         return (
           <>
           <Container>
@@ -93,12 +94,13 @@ export default function SubmittedOrder() {
               <Typography
                 sx={{ mx: 4, textAlign: "left", color: "#bc6c25", m: 2 }}
               >
-                {orderInfo.cart.map((product: { productId: string; }, index: string) => (
-                <Typography 
+                {cartItems.map((item: {name: string}, index: string) => (
+                  <Typography
                   key={index}
-                  variant="h6"
+                  variant="h4"
+                  sx={{textAlign: "left", color: "black", my: "0.5rem"}}
                 >
-                  {product.productId}
+                  {item.name}
                 </Typography>
                 ))}
               </Typography>
