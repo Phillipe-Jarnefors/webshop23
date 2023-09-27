@@ -40,7 +40,7 @@ Appen körs med hjälp av vår databas MongoDB som vi lagrar all data på. Så v
 När man tar bort produkter eller ordrar så soft-deletas det bara, det vill säga att det finns kvar i databasen men inte längre synligt i appen. 
 Det går naturligtvis bra att ansluta till MongoDB databasen och ändra tillbaks ett värde ifall man gjort fel genom att ändra isDeleted värdet för Order respektive Product.
 
-Snabbinstallation:
+## Snabbinstallation:
 
 Frontend
 ```js
