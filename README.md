@@ -57,7 +57,7 @@ nodemon start
 ```
 
 
-## Länkar:
+## Technologies used:
 
 [React](https://react.dev/) <br>
 [MongoDB](https://www.mongodb.com/) <br>
